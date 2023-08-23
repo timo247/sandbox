@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="fr">
+
+<head>
+    <meta charset="utf-8">
+    <title>Titre de la page</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+
+<body>
+    <div class="form-wrapper">
+        <form action="/nada" method="POST">
+            <input type="text" id="tagInput" placeholder="Ajouter des tags">
+            <div id="selectedTags">
+
+            </div>
+            <div>
+                <ul id="tagSuggestions"></ul>
+            </div>
+        </form>
+
+    </div>
+</body>
+
+<script>
+    const existingTags = ['Justice',
+        'Gloire',
+        'Pouvoir',
+        'Gouvernance',
+        'Argent',
+        'Amour',
+        'Ordre',
+        'Nature',
+        'Éloquence',
+        'Joie',
+        'Colère',
+        'Équilibre',
+        'Sagesse',
+        'Technologie',
+        'Échec',
+        'Sociabilité',
+        'Générosité',
+        'Courage',
+        'Avarice',
+        'Stress',
+        'Travail',
+        'Réussite',
+        'Oisiveté',
+        'Repos',
+        'Intelligence',
+        'Ignorance',
+        'Simplicité',
+        'Pureté',
+        'Vulgarité'
+    ];
+
+    const tagInput = document.getElementById('tagInput');
+    const tagSuggestions = document.getElementById('tagSuggestions');
+    const selectedTags = document.getElementById('selectedTags');
+
+    tagInput.addEventListener('input', function () {
+        deleteChildren('#tagSuggestions')
+        const matchingTags = existingTags.filter(str => str.includes(tagInput.value));
+        displayPossibleTags(matchingTags)
+    });
+
+    function deleteChildren(selector) {
+        const node = document.querySelector(selector);
+        while (node.firstChild) {
+            node.removeChild(node.lastChild);
+        }
+    }
+
+    function displayPossibleTags(matchingTags) {
+        matchingTags.forEach((tag) => {
+            const tagsList = document.querySelector('#tagSuggestions');
+            const tagNode = document.createElement('li');
+            tagNode.classList.add("cliquable-sugestion");
+            tagNode.textContent = tag;
+            tagsList.appendChild(tagNode);
+            tagNode.addEventListener('click', (e) => addTag(e.target.textContent))
+        });
+
+    }
+
+    function addTag(tag) {
+        const tagsList = document.querySelector('#selectedTags');
+        const tagEl = createDomElement({ type: 'div', classList: ['backGroundedItem'] });
+        const tagSpan = createDomElement({ type: 'span', textContent: tag });
+        const deleteBtn = createDomElement({ type: 'span', classList: ['material-icons'], textContent: 'close' });
+        deleteBtn.addEventListener('click', (e) => e.target.parentNode.parentNode.removeChild(e.target.parentNode));
+        tagsList.appendChild(tagEl);
+        tagEl.appendChild(tagSpan);
+        tagEl.appendChild(deleteBtn);
+    }
+
+    function createDomElement(params) {
+        const el = document.createElement(params.type);
+        if (params.classList) {
+            params.classList.forEach((className) => {
+                el.classList.add(className);
+            });
+        }
+        if (params.textContent) {
+            el.textContent = params.textContent;
+        }
+        console.log("el to return", el, params);
+        return el;
+    }
+
+
+</script>
+
+</html>
