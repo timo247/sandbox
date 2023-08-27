@@ -5,19 +5,23 @@
     <meta charset="utf-8">
     <title>Titre de la page</title>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
 </head>
 
 <body>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
+        crossorigin="anonymous"></script>
     <div class="form-wrapper">
         <form action="/nada" method="POST">
             <input type="text" id="tagInput" placeholder="Ajouter des tags">
-            <div id="selectedTags">
-
-            </div>
-            <div class="suggestionsWrapper">
-                <ul id="tagSuggestions"></ul>
-            </div>
-        </form>
+            <ul id="selectedTags" class="list-group list-group-horizontal">
+    </div>
+    <div class="suggestionsWrapper">
+        <ul id="tagSuggestions" class="list-group"></ul>
+    </div>
+    </form>
 
     </div>
 </body>
@@ -58,10 +62,19 @@
     const tagSuggestions = document.getElementById('tagSuggestions');
     const selectedTags = document.getElementById('selectedTags');
 
-    tagInput.addEventListener('input', function () {
-        deleteChildren('#tagSuggestions')
-        const matchingTags = existingTags.filter(str => str.includes(tagInput.value));
-        displayPossibleTags(matchingTags)
+    tagInput.addEventListener('input', function (e) {
+        deleteChildren('#tagSuggestions');
+        if (e.target.value != '') {
+            let matchingTags = existingTags.filter(str => str.includes(tagInput.value));
+            let selectedTags = document.querySelectorAll('#selectedTags span.selected-tag');
+            console.log("selected Tags", selectedTags);
+            for (selectedTag of selectedTags) {
+                if (matchingTags.includes(selectedTag.textContent)) {
+                    matchingTags.splice(matchingTags.indexOf(selectedTag.textContent), 1);
+                }
+            }
+            displayPossibleTags(matchingTags);
+        }
     });
 
     function deleteChildren(selector) {
@@ -74,24 +87,25 @@
     function displayPossibleTags(matchingTags) {
         matchingTags.forEach((tag) => {
             const tagsList = document.querySelector('#tagSuggestions');
-            const tagNode = document.createElement('li');
-            tagNode.classList.add("cliquable-sugestion");
-            tagNode.textContent = tag;
+            const tagNode = createDomElement({ type: 'li', classList: ['list-group-item'], textContent: tag });
             tagsList.appendChild(tagNode);
-            tagNode.addEventListener('click', (e) => addTag(e.target.textContent))
+            tagNode.addEventListener('click', (e) => addTag(e.target.textContent));
+            tagNode.addEventListener('mouseover', e => { e.target.classList.toggle('active') });
+            tagNode.addEventListener('mouseleave', e => { e.target.classList.toggle('active') })
         });
-
     }
 
     function addTag(tag) {
         const tagsList = document.querySelector('#selectedTags');
-        const tagEl = createDomElement({ type: 'div', classList: ['backGroundedItem'] });
-        const tagSpan = createDomElement({ type: 'span', textContent: tag });
+        const tagEl = createDomElement({ type: 'li', classList: ['list-group-item'] });
+        const tagSpan = createDomElement({ type: 'span', classList: ['selected-tag'], textContent: tag });
         const deleteBtn = createDomElement({ type: 'span', classList: ['material-icons'], textContent: 'close' });
         deleteBtn.addEventListener('click', (e) => e.target.parentNode.parentNode.removeChild(e.target.parentNode));
         tagsList.appendChild(tagEl);
         tagEl.appendChild(tagSpan);
         tagEl.appendChild(deleteBtn);
+        deleteChildren('#tagSuggestions');
+        document.querySelector('#tagInput').value = '';
     }
 
     function createDomElement(params) {
@@ -104,7 +118,7 @@
         if (params.textContent) {
             el.textContent = params.textContent;
         }
-        console.log("el to return", el, params);
+        //console.log("el to return", el, params);
         return el;
     }
 
