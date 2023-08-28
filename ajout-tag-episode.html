@@ -3,6 +3,7 @@
 
 <head>
     <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Titre de la page</title>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
@@ -13,20 +14,36 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
         crossorigin="anonymous"></script>
-    <div class="form-wrapper">
+    <div style="height: 40vh;"></div>
+    <div class="container">
         <form action="/nada" method="POST">
-            <input type="text" id="tagInput" placeholder="Ajouter des tags">
-            <ul id="selectedTags" class="list-group list-group-horizontal">
-    </div>
-    <div class="suggestionsWrapper">
-        <ul id="tagSuggestions" class="list-group"></ul>
-    </div>
-    </form>
-
+            <div class="row position-relative">
+                <div class="suggestionsWrapper col col-10 col-sm-8 col-md-4 position-absolute bottom-0 start-0">
+                    <ul id="tagSuggestions" class="list-group"></ul>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col col-10 col-sm-8 col-md-4">
+                    <label>Tags</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col col-10 col-sm-8 col-md-4">
+                    <input type="text" id="tagInput" placeholder="Ajouter des tags">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col col-10 col-sm-8 col-md-4">
+                    <div id="selectedTags" class="flex-wrap">
+                    </div>
+                </div>
+            </div>
+        </form>
     </div>
 </body>
 
 <script>
+    /* Gérer l'ajout de tags par enter et ajouter un bouton pour ajouter les tags*/
     const existingTags = ['Justice',
         'Gloire',
         'Pouvoir',
@@ -97,7 +114,7 @@
 
     function addTag(tag) {
         const tagsList = document.querySelector('#selectedTags');
-        const tagEl = createDomElement({ type: 'li', classList: ['list-group-item'] });
+        const tagEl = createDomElement({ type: 'button', classList: ['btn', 'btn-secondary', 'me-2', 'mt-2'] });
         const tagSpan = createDomElement({ type: 'span', classList: ['selected-tag'], textContent: tag });
         const deleteBtn = createDomElement({ type: 'span', classList: ['material-icons'], textContent: 'close' });
         deleteBtn.addEventListener('click', (e) => e.target.parentNode.parentNode.removeChild(e.target.parentNode));
@@ -124,5 +141,12 @@
 
 
 </script>
+
+<style>
+    .suggestionsWrapper {
+        max-height: 20vh;
+        overflow-y: auto;
+    }
+</style>
 
 </html>
