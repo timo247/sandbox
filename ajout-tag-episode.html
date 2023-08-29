@@ -16,11 +16,16 @@
         crossorigin="anonymous"></script>
     <div style="height: 40vh;"></div>
     <div class="container">
-        <form action="/nada" method="POST">
+        <form id="addTagForm" action="/nada" method="POST">
             <div class="row position-relative">
-                <div class="suggestionsWrapper col col-10 col-sm-8 col-md-4 position-absolute bottom-0 start-0">
-                    <ul id="tagSuggestions" class="list-group"></ul>
+                <div class="col col col-10 col-sm-8 col-md-4 position-absolute bottom-0 start-0">
+                    <div class="suggestionsWrapper ">
+                        <ul id="tagSuggestions" class="list-group"></ul>
+                    </div>
                 </div>
+                <!-- <div class="col col-10 col-sm-8 col-md-4 position-absolute bottom-0 start-0 ">
+                    <div id="tagSuggestionsBottomBorder" class="suggestionsBorder d-*-none border"></div>
+                </div> -->
             </div>
             <div class="row">
                 <div class="col col-10 col-sm-8 col-md-4">
@@ -30,6 +35,7 @@
             <div class="row">
                 <div class="col col-10 col-sm-8 col-md-4">
                     <input type="text" id="tagInput" placeholder="Ajouter des tags">
+                    <input id="addTagBtn" type="submit" value="Ajouter" />
                 </div>
             </div>
             <div class="row">
@@ -78,20 +84,46 @@
     const tagInput = document.getElementById('tagInput');
     const tagSuggestions = document.getElementById('tagSuggestions');
     const selectedTags = document.getElementById('selectedTags');
+    const addTagBtn = document.getElementById('addTagBtn');
+    const addTagForm = document.getElementById('addTagForm');
+    const suggestionsWrapper = document.querySelector('.suggestionsWrapper');
 
-    tagInput.addEventListener('input', function (e) {
+    addTagForm.addEventListener('submit', e => {
+        e.preventDefault();
+        let tag = tagInput.value;
+        if (tagInput.value != '') {
+            addTag(tag);
+        }
+        manageScrollableElementBorder(suggestionsWrapper);
+    });
+
+    addTagBtn.addEventListener('click', e => {
+        e.preventDefault();
+        let tag = tagInput.value;
+        if (tagInput.value != '') {
+            addTag(tag);
+        }
+        manageScrollableElementBorder(suggestionsWrapper);
+    });
+
+
+    tagInput.addEventListener('input', e => {
         deleteChildren('#tagSuggestions');
         if (e.target.value != '') {
-            let matchingTags = existingTags.filter(str => str.includes(tagInput.value));
+            let matchingTags = existingTags.filter(str => str.includes(e.target.value));
             let selectedTags = document.querySelectorAll('#selectedTags span.selected-tag');
-            console.log("selected Tags", selectedTags);
             for (selectedTag of selectedTags) {
                 if (matchingTags.includes(selectedTag.textContent)) {
                     matchingTags.splice(matchingTags.indexOf(selectedTag.textContent), 1);
                 }
             }
             displayPossibleTags(matchingTags);
+            manageScrollableElementBorder(suggestionsWrapper);
         }
+    });
+
+    suggestionsWrapper.addEventListener('scroll', e => {
+        manageScrollableElementBorder(e.target);
     });
 
     function deleteChildren(selector) {
@@ -102,6 +134,7 @@
     }
 
     function displayPossibleTags(matchingTags) {
+        console.log('input')
         matchingTags.forEach((tag) => {
             const tagsList = document.querySelector('#tagSuggestions');
             const tagNode = createDomElement({ type: 'li', classList: ['list-group-item'], textContent: tag });
@@ -139,6 +172,20 @@
         return el;
     }
 
+    //Add top border or bottom border to scrollable element when top and bot borders are not displayed
+    function manageScrollableElementBorder(el) {
+        console.log(el.scrollTop, el.scrollHeight, el.scrollHeight - el.offsetHeight)
+        el.classList.remove('border-top');
+        el.classList.remove('border-bottom');
+
+        if (el.scrollTop < el.scrollHeight - el.offsetHeight + 1 && el.scrollHeight > 0 && el.scrollHeight - el.offsetHeight > 0) {
+            el.classList.add('border-bottom');
+        }
+        if (el.scrollTop > 0) {
+            el.classList.add('border-top');
+        }
+    }
+
 
 </script>
 
@@ -146,6 +193,7 @@
     .suggestionsWrapper {
         max-height: 20vh;
         overflow-y: auto;
+        border-radius: 5px;
     }
 </style>
 
