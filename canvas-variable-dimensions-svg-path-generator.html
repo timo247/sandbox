@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Dessiner un motif avec des dimensions variables</title>
+</head>
+
+<body>
+    <h1> Create SVG images with dynamic colors and dimensions with HTML Canvas </h1>
+    <p>As you probably understood, you first need to transform an SVG image into a path. To do so, you can use the
+        tutorial on <a
+            href="https://stackoverflow.com/questions/11529470/is-there-a-tool-to-create-svg-paths-from-an-svg-file">this
+            address</a> which uses Gimp for that. you can then replace the script below with the value that interest
+        you, following the logic ! Thank you for reading, do not hesitate to contact me if interested trough <a
+            href="https://timothee-dione.ch">my personal website</a></p>
+    <canvas id="monCanvas" width="900" height="600" style="border:1px solid #000;"></canvas>
+
+    <script>
+        var canvas = document.getElementById('monCanvas');
+        var ctx = canvas.getContext('2d');
+
+        function dessinerMotif1(x, y, size) {
+            ctx.beginPath();
+
+            ctx.moveTo(487.00 * size + x, 188.00 * size + y);
+            ctx.bezierCurveTo(487.00 * size + x, 188.00 * size + y, 658.50 * size + x, 188.00 * size + y, 658.50 * size + x, 188.00 * size + y);
+            ctx.bezierCurveTo(762.61 * size + x, 188.00 * size + y, 847.00 * size + x, 272.39 * size + y, 847.00 * size + x, 376.50 * size + y);
+            ctx.bezierCurveTo(847.00 * size + x, 480.61 * size + y, 762.61 * size + x, 565.00 * size + y, 658.50 * size + x, 565.00 * size + y);
+            ctx.bezierCurveTo(658.50 * size + x, 565.00 * size + y, 188.50 * size + x, 565.00 * size + y, 188.50 * size + x, 565.00 * size + y);
+            ctx.bezierCurveTo(84.39 * size + x, 565.00 * size + y, 0.00 * size + x, 480.61 * size + y, 0.00 * size + x, 376.50 * size + y);
+            ctx.bezierCurveTo(0.00 * size + x, 300.41 * size + y, 45.09 * size + x, 234.85 * size + y, 110.00 * size + x, 205.07 * size + y);
+            ctx.bezierCurveTo(110.00 * size + x, 205.07 * size + y, 110.00 * size + x, 188.50 * size + y, 110.00 * size + x, 188.50 * size + y);
+            ctx.bezierCurveTo(110.00 * size + x, 84.39 * size + y, 194.39 * size + x, 0.00 * size + y, 298.50 * size + x, 0.00 * size + y);
+            ctx.bezierCurveTo(402.44 * size + x, 0.00 * size + y, 486.73 * size + x, 84.12 * size + y, 487.00 * size + x, 188.00 * size + y);
+
+            ctx.fillStyle = getRandomColor();
+            ctx.fill();
+
+            ctx.strokeStyle = getRandomColor();
+            ctx.stroke();
+        }
+
+        function dessinerMotif2(x, y, size) {
+            ctx.beginPath();
+
+            ctx.moveTo(368.50 * size + x, 102.54 * size + y);
+            ctx.bezierCurveTo(368.50 * size + x, 102.54 * size + y, 368.50 * size + x, 94.25 * size + y, 368.50 * size + x, 94.25 * size + y);
+            ctx.bezierCurveTo(368.50 * size + x, 42.20 * size + y, 326.30 * size + x, 0.00 * size + y, 274.25 * size + x, 0.00 * size + y);
+            ctx.bezierCurveTo(222.28 * size + x, 0.00 * size + y, 180.13 * size + x, 42.06 * size + y, 180.00 * size + x, 94.00 * size + y);
+            ctx.bezierCurveTo(180.00 * size + x, 94.00 * size + y, 94.25 * size + x, 94.00 * size + y, 94.25 * size + x, 94.00 * size + y);
+            ctx.bezierCurveTo(42.20 * size + x, 94.00 * size + y, 0.00 * size + x, 136.20 * size + y, 0.00 * size + x, 188.25 * size + y);
+            ctx.bezierCurveTo(0.00 * size + x, 240.30 * size + y, 42.20 * size + x, 282.50 * size + y, 94.25 * size + x, 282.50 * size + y);
+            ctx.bezierCurveTo(94.25 * size + x, 282.50 * size + y, 329.25 * size + x, 282.50 * size + y, 329.25 * size + x, 282.50 * size + y);
+            ctx.bezierCurveTo(381.30 * size + x, 282.50 * size + y, 423.50 * size + x, 240.30 * size + y, 423.50 * size + x, 188.25 * size + y);
+            ctx.bezierCurveTo(423.50 * size + x, 150.20 * size + y, 400.96 * size + x, 117.42 * size + y, 368.50 * size + x, 102.54 * size + y);
+            ctx.closePath();
+
+            ctx.fillStyle = getRandomColor();
+            ctx.fill();
+
+            ctx.strokeStyle = getRandomColor();
+            ctx.stroke();
+        }
+
+        function getRandomColor() {
+            var letters = '0123456789ABCDEF';
+            var color = '#';
+            for (var i = 0; i < 6; i++) {
+                color += letters[Math.floor(Math.random() * 16)];
+            }
+            return color;
+        }
+
+        for (var i = 0; i < 10; i++) {
+            var x = Math.random() * 400; // Coordonnée x aléatoire
+            var y = Math.random() * 400; // Coordonnée y aléatoire
+            var size = Math.random() * 1.5 + 0.5; // Tailles entre 0.5 et 2
+
+            dessinerMotif1(x, y, size);
+            dessinerMotif2(x, y, size);
+        }
+    </script>
+</body>
+
+</html>
