@@ -147,9 +147,9 @@
 
     function addTag(tag) {
         const tagsList = document.querySelector('#selectedTags');
-        const tagEl = createDomElement({ type: 'button', classList: ['btn', 'btn-secondary', 'me-2', 'mt-2'] });
+        const tagEl = createDomElement({ type: 'button', classList: ['btn', 'btn-secondary', 'me-2', 'mt-2', 'd-flex'] });
         const tagSpan = createDomElement({ type: 'span', classList: ['selected-tag'], textContent: tag });
-        const deleteBtn = createDomElement({ type: 'span', classList: ['material-icons'], textContent: 'close' });
+        const deleteBtn = createDomElement({ type: 'span', classList: ['material-icons', 'ml-2'], textContent: 'close' });
         deleteBtn.addEventListener('click', (e) => e.target.parentNode.parentNode.removeChild(e.target.parentNode));
         tagsList.appendChild(tagEl);
         tagEl.appendChild(tagSpan);
@@ -194,6 +194,10 @@
         max-height: 20vh;
         overflow-y: auto;
         border-radius: 5px;
+    }
+
+    .ml-2 {
+        margin-left: 4px;
     }
 </style>
 
