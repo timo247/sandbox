@@ -40,7 +40,7 @@ function generateClouds() {
       200 * cloudGroup.sizeFactor;
     const groupX = getRandomInt(0, ctx.canvas.clientWidth);
     const groupColor = randomColor({
-      hue: 'blue',
+      hue: '',
       luminosity: 'light',
     });
     const bigCloud = new InflatTorusCloud({
