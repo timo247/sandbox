@@ -11,7 +11,7 @@ export default class InflatTorusCloud {
     depthPlan = 299,
     flatTorusLength = 900,
     flatTorusWidth = 900,
-    shape = 'normal',
+    shape = 'big',
   } = {}) {
     this.x = x;
     this.y = y;
@@ -28,31 +28,14 @@ export default class InflatTorusCloud {
   move(deltaT, angle) {
     this.x = this.x + Math.cos(angle) * this.speed * deltaT;
     this.y = this.y + Math.sin(angle * -1) * this.speed * deltaT;
-    if (this.shape == 'normal') {
-      if (this.x > this.flatTorusWidth) {
-        this.x -= this.flatTorusWidth + this.sizeFactor * 847;
-      }
-      // else if (this.x < 0) {
-      //   this.x += this.flatTorusWidth;
-      // }
-      if (this.y > this.flatTorusLength) {
-        this.y -= this.flatTorusLength;
-      } else if (this.y < 0) {
-        this.y += this.flatTorusLength;
-      }
-    } else {
-      if (this.x > this.flatTorusWidth) {
-        this.x -= this.flatTorusWidth + this.sizeFactor * 423;
-      }
-      // else if (this.x < 0) {
-      //   this.x += this.flatTorusWidth;
-      // }
-      if (this.y > this.flatTorusLength) {
-        this.y -= this.flatTorusLength;
-      } else if (this.y < 0) {
-        this.y += this.flatTorusLength;
-      }
+    if (this.x > this.flatTorusWidth) {
+      this.x -= this.flatTorusWidth + this.sizeFactor * 847;
     }
+    // if (this.y > this.flatTorusLength) {
+    //   this.y -= this.flatTorusLength;
+    // } else if (this.y < 0) {
+    //   this.y += this.flatTorusLength;
+    // }
   }
 
   setSizeFactor(factor) {
@@ -60,14 +43,16 @@ export default class InflatTorusCloud {
   }
 
   draw(ctx) {
-    if (this.shape === 'normal') {
-      this.drawNormalCloudShape(ctx);
-    } else {
-      this.drawReverseCloudShape(ctx);
+    if (this.shape === 'big') {
+      this.drawBigCloudShape(ctx);
+    } else if (this.shape == 'medium') {
+      this.drawMediumCloudShape(ctx);
+    } else if (this.shape == 'small') {
+      this.drawSmallCloudShape(ctx);
     }
   }
 
-  drawNormalCloudShape(ctx) {
+  drawBigCloudShape(ctx) {
     ctx.beginPath();
     ctx.moveTo(
       487.0 * this.sizeFactor + this.x,
@@ -152,7 +137,7 @@ export default class InflatTorusCloud {
     ctx.stroke();
   }
 
-  drawReverseCloudShape(ctx) {
+  drawMediumCloudShape(ctx) {
     ctx.beginPath();
     ctx.moveTo(
       368.5 * this.sizeFactor + this.x,
@@ -237,16 +222,88 @@ export default class InflatTorusCloud {
     ctx.stroke();
   }
 
-  compareSize(cloud1, cloud2) {
-    //console.log(c1);
-    let sizeFactor1 = cloud1.sizeFactor;
-    let sizeFactor2 = cloud2.sizeFactor;
-    if (sizeFactor1 > sizeFactor2) {
-      return 1;
-    } else if (sizeFactor1 < sizeFactor2) {
-      return -1;
-    } else {
-      return 0;
-    }
+  drawSmallCloudShape(ctx) {
+    ctx.beginPath();
+    ctx.moveTo(
+      184.25 * this.sizeFactor + this.x,
+      51.27 * this.sizeFactor + this.y
+    );
+    ctx.bezierCurveTo(
+      184.25 * this.sizeFactor + this.x,
+      51.27 * this.sizeFactor + this.y,
+      184.25 * this.sizeFactor + this.x,
+      47.13 * this.sizeFactor + this.y,
+      184.25 * this.sizeFactor + this.x,
+      47.13 * this.sizeFactor + this.y
+    );
+    ctx.bezierCurveTo(
+      184.25 * this.sizeFactor + this.x,
+      21.1 * this.sizeFactor + this.y,
+      163.15 * this.sizeFactor + this.x,
+      0.0 * this.sizeFactor + this.y,
+      137.12 * this.sizeFactor + this.x,
+      0.0 * this.sizeFactor + this.y
+    );
+    ctx.bezierCurveTo(
+      111.14 * this.sizeFactor + this.x,
+      0.0 * this.sizeFactor + this.y,
+      90.07 * this.sizeFactor + this.x,
+      21.03 * this.sizeFactor + this.y,
+      90.0 * this.sizeFactor + this.x,
+      47.0 * this.sizeFactor + this.y
+    );
+    ctx.bezierCurveTo(
+      90.0 * this.sizeFactor + this.x,
+      47.0 * this.sizeFactor + this.y,
+      47.13 * this.sizeFactor + this.x,
+      47.0 * this.sizeFactor + this.y,
+      47.13 * this.sizeFactor + this.x,
+      47.0 * this.sizeFactor + this.y
+    );
+    ctx.bezierCurveTo(
+      21.1 * this.sizeFactor + this.x,
+      47.0 * this.sizeFactor + this.y,
+      0.0 * this.sizeFactor + this.x,
+      68.1 * this.sizeFactor + this.y,
+      0.0 * this.sizeFactor + this.x,
+      94.12 * this.sizeFactor + this.y
+    );
+    ctx.bezierCurveTo(
+      0.0 * this.sizeFactor + this.x,
+      120.15 * this.sizeFactor + this.y,
+      21.1 * this.sizeFactor + this.x,
+      141.25 * this.sizeFactor + this.y,
+      47.13 * this.sizeFactor + this.x,
+      141.25 * this.sizeFactor + this.y
+    );
+    ctx.bezierCurveTo(
+      47.13 * this.sizeFactor + this.x,
+      141.25 * this.sizeFactor + this.y,
+      164.62 * this.sizeFactor + this.x,
+      141.25 * this.sizeFactor + this.y,
+      164.62 * this.sizeFactor + this.x,
+      141.25 * this.sizeFactor + this.y
+    );
+    ctx.bezierCurveTo(
+      190.65 * this.sizeFactor + this.x,
+      141.25 * this.sizeFactor + this.y,
+      211.75 * this.sizeFactor + this.x,
+      120.15 * this.sizeFactor + this.y,
+      211.75 * this.sizeFactor + this.x,
+      94.12 * this.sizeFactor + this.y
+    );
+    ctx.bezierCurveTo(
+      211.75 * this.sizeFactor + this.x,
+      75.1 * this.sizeFactor + this.y,
+      200.48 * this.sizeFactor + this.x,
+      58.71 * this.sizeFactor + this.y,
+      184.25 * this.sizeFactor + this.x,
+      51.27 * this.sizeFactor + this.y
+    );
+    ctx.closePath();
+    ctx.fillStyle = this.color;
+    ctx.fill();
+    ctx.strokeStyle = this.borderColor;
+    ctx.stroke();
   }
 }
