@@ -51,7 +51,7 @@ function generateClouds() {
       shape: 'big',
       flatTorusWidth: ctx.canvas.clientWidth,
       flatTorusHeight: ctx.canvas.clientHeight,
-      speed: cloudGroup.sizeFactor * 0.4,
+      speed: cloudGroup.sizeFactor * 0.3,
     });
     const mediumCloud = new InflatTorusCloud({
       y: groupY + cloudGroup.sizeFactor * 85,
@@ -61,7 +61,7 @@ function generateClouds() {
       shape: 'medium',
       flatTorusWidth: ctx.canvas.clientWidth,
       flatTorusHeight: ctx.canvas.clientHeight,
-      speed: cloudGroup.sizeFactor * 0.4,
+      speed: cloudGroup.sizeFactor * 0.3,
     });
     const smallCloud = new InflatTorusCloud({
       y: groupY + cloudGroup.sizeFactor * 369,
@@ -71,7 +71,7 @@ function generateClouds() {
       shape: 'small',
       flatTorusWidth: ctx.canvas.clientWidth,
       flatTorusHeight: ctx.canvas.clientHeight,
-      speed: cloudGroup.sizeFactor * 0.4,
+      speed: cloudGroup.sizeFactor * 0.3,
     });
     sortCloudsInsideGroup(cloudGroup, [bigCloud, mediumCloud, smallCloud]);
     cloudGroups.push(cloudGroup);
