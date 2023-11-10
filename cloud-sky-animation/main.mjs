@@ -41,7 +41,7 @@ function generateClouds() {
     const groupX = getRandomInt(0, ctx.canvas.clientWidth);
     const groupColor = randomColor({
       hue: '',
-      luminosity: 'light',
+      luminosity: '',
     });
     const bigCloud = new InflatTorusCloud({
       y: groupY,
@@ -73,22 +73,13 @@ function generateClouds() {
       flatTorusHeight: ctx.canvas.clientHeight,
       speed: cloudGroup.sizeFactor * 0.3,
     });
-    sortCloudsInsideGroup(cloudGroup, [bigCloud, mediumCloud, smallCloud]);
+    cloudGroup.clouds.push(bigCloud);
+    cloudGroup.clouds.push(mediumCloud);
+    cloudGroup.clouds.push(smallCloud);
     cloudGroups.push(cloudGroup);
   }
   sortCloudGroups(cloudGroups);
   return cloudGroups;
-}
-
-function sortCloudsInsideGroup(cloudGroup, clouds) {
-  let randomN = Math.random();
-  if (randomN <= 0.33) {
-    cloudGroup.clouds = [clouds[0], clouds[1], clouds[2]];
-  } else if (randomN > 0.33 && randomN <= 0.66) {
-    cloudGroup.clouds = [clouds[1], clouds[0], clouds[2]];
-  } else {
-    cloudGroup.clouds = [clouds[1], clouds[2], clouds[0]];
-  }
 }
 
 function sortCloudGroups(cloudGroups) {
