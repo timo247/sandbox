@@ -12,6 +12,8 @@ export default class InflatTorusCloud {
     flatTorusLength = 900,
     flatTorusWidth = 900,
     shape = 'big',
+    baseX = 0,
+    baseY = 0,
   } = {}) {
     this.x = x;
     this.y = y;
@@ -23,6 +25,8 @@ export default class InflatTorusCloud {
     this.flatTorusLength = flatTorusLength;
     this.flatTorusWidth = flatTorusWidth;
     this.shape = shape;
+    this.baseX = baseX;
+    this.baseY = baseY;
   }
 
   move(deltaT, angle) {
@@ -36,6 +40,16 @@ export default class InflatTorusCloud {
     // } else if (this.y < 0) {
     //   this.y += this.flatTorusLength;
     // }
+  }
+
+  moveCircular(deltaT, angle) {
+    // Déplace le nuage en suivant un mouvement circulaire
+    const radius = 30; // Choisis le rayon du cercle selon tes besoins
+    // Calcule les nouvelles coordonnées en mouvement circulaire
+    this.x = this.baseX + radius * Math.cos(angle) * this.speed * deltaT;
+    this.y = this.baseY + radius * Math.sin(angle) * this.speed * deltaT;
+
+    // Tu peux ajuster ces coordonnées en fonction de la taille du nuage et du mouvement désiré.
   }
 
   setSizeFactor(factor) {
