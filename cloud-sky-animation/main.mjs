@@ -24,10 +24,10 @@ function reRender(time) {
     });
   });
   logo.clouds.forEach((cloud) => {
-    cloud.moveCircular(deltaT, logoAngle);
+    cloud.moveRotational(deltaT, logoAngle, 10);
     cloud.draw(ctx);
   });
-  logoAngle++;
+  logoAngle += 40;
   logo.text.move(deltaT, backgroundAngle);
   logo.text.draw(ctx);
   requestAnimationFrame(reRender);
@@ -36,9 +36,9 @@ requestAnimationFrame(reRender);
 
 function generateClouds() {
   const cloudGroups = [];
-  for (let i = 0; i < 75; i++) {
+  for (let i = 0; i < 100; i++) {
     const cloudGroup = {
-      sizeFactor: determineGroupSize(),
+      sizeFactor: determineGroupSize(true),
       clouds: [],
     };
     const groupY =
@@ -137,13 +137,15 @@ function generateLogo() {
   const logoText = new ImageToDraw({
     x: baseLogoPos.x + 148 * logo.sizeFactor,
     y: baseLogoPos.y + 143 * logo.sizeFactor,
+    baseX: baseLogoPos.x + 148 * logo.sizeFactor,
+    baseY: baseLogoPos.y + 143 * logo.sizeFactor,
     sizeFactor: logo.sizeFactor,
     baseHeight: 293,
     baseWidth: 597,
   });
 
-  logo.clouds.push(mediumCloud);
   logo.clouds.push(bigCloud);
+  logo.clouds.push(mediumCloud);
   logo.clouds.push(smallCloud);
   logo.text = logoText;
 
@@ -166,14 +168,38 @@ function compareSize(el1, el2) {
   }
 }
 
-function determineGroupSize() {
-  let i = Math.floor(Math.random() * 15) + 1;
-  if (i >= 14) {
-    return getRandomInt(35, 50) / 100;
-  } else if (i >= 10 && i < 14) {
-    return getRandomInt(18, 30) / 100;
+function determineGroupSize(withBenfordLaw) {
+  //Benford natural law: in a scope of different values in the nature, we will systematically find the following repartition of numbers: 24x1, 18x2, 15x3, 11x4, 10x5, 9x6, 5x7, 5x8, 5x9
+  if (withBenfordLaw) {
+    let i = getRandomInt(1, 92);
+    if (i <= 24) {
+      return getRandomInt(3, 5) / 100;
+    } else if (i > 24 && i <= 42) {
+      return getRandomInt(7, 10) / 100;
+    } else if (i > 42 && i <= 57) {
+      return getRandomInt(13, 15) / 100;
+    } else if (i > 57 && i <= 66) {
+      return getRandomInt(17, 20) / 100;
+    } else if (i > 66 && i <= 76) {
+      return getRandomInt(23, 25) / 100;
+    } else if (i > 76 && i <= 85) {
+      return getRandomInt(27, 30) / 100;
+    } else if (i > 85 && i <= 90) {
+      return getRandomInt(27, 30) / 100;
+    } else if (i > 90 && i <= 95) {
+      return getRandomInt(33, 35) / 100;
+    } else if (i > 95 && i < 100) {
+      return getRandomInt(37, 40) / 100;
+    }
   } else {
-    return getRandomInt(5, 15) / 100;
+    let i = Math.floor(Math.random() * 15) + 1;
+    if (i >= 14) {
+      return getRandomInt(35, 50) / 100;
+    } else if (i >= 10 && i < 14) {
+      return getRandomInt(18, 30) / 100;
+    } else {
+      return getRandomInt(5, 15) / 100;
+    }
   }
 }
 

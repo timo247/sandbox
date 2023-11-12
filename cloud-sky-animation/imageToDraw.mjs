@@ -2,6 +2,8 @@ export default class ImageToDraw {
   constructor({
     x = 0,
     y = 0,
+    baseX = 0,
+    baseY = 0,
     speed = 0,
     imagePath = './text-chroniques.svg',
     sizeFactor = 1,
@@ -10,7 +12,7 @@ export default class ImageToDraw {
   } = {}) {
     this.x = x;
     this.y = y;
-    this.speed = speed;
+    (this.baseX = baseX), (this.baseY = baseY), (this.speed = speed);
     this.imagePath = imagePath;
     this.sizeFactor = sizeFactor;
     this.baseHeight = baseHeight;
@@ -20,6 +22,11 @@ export default class ImageToDraw {
   move(deltaT, angle) {
     this.x = this.x + Math.cos(angle) * this.speed * deltaT;
     this.y = this.y + Math.sin(angle * -1) * this.speed * deltaT;
+  }
+
+  moveRotational(deltaT, angle, radius) {
+    this.x = this.baseX + radius + Math.cos(angle) * this.speed * deltaT;
+    this.y = this.baseY + radius + Math.sin(angle * -1) * this.speed * deltaT;
   }
 
   draw(ctx) {

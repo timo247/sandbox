@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        canvas {
+            border: 1px solid #000;
+        }
+    </style>
+    <title>Animation de cercle</title>
+</head>
+
+<body>
+    <canvas id="myCanvas" width="500" height="500"></canvas>
+
+    <script>
+        // Récupérer le canvas et son contexte
+        var canvas = document.getElementById('myCanvas');
+        var ctx = canvas.getContext('2d');
+
+        // Paramètres de l'animation
+        var angle = 0;  // Angle initial
+        var radius = 50; // Rayon du cercle
+
+        function drawCircle() {
+            // Effacer le canvas
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            // Calculer les nouvelles coordonnées en utilisant des coordonnées polaires
+            var x = canvas.width / 2 + radius * Math.cos(angle);
+            var y = canvas.height / 2 + radius * Math.sin(angle);
+
+            // Dessiner le cercle
+            ctx.beginPath();
+            ctx.arc(x, y, 20, 0, Math.PI * 2);
+            ctx.fillStyle = 'blue';
+            ctx.fill();
+            ctx.closePath();
+
+            // Mettre à jour l'angle pour le mouvement circulaire
+            angle += 0.02; // Vous pouvez ajuster la vitesse en changeant la valeur ici
+
+            // Appeler la fonction de dessin à la prochaine frame
+            requestAnimationFrame(drawCircle);
+        }
+
+        // Lancer l'animation
+        drawCircle();
+    </script>
+</body>
+
+</html>
