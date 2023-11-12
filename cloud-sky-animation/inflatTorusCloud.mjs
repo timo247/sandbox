@@ -43,9 +43,15 @@ export default class InflatTorusCloud {
   }
 
   moveRotational(deltaT, angle, radius) {
-    this.x = this.baseX + radius * Math.cos(angle) * this.speed * deltaT;
-    this.y = this.baseY + radius * Math.sin(angle * -1) * this.speed * deltaT;
-    console.log(angle);
+    if (this.shape == 'big') {
+      this.x = this.baseX + radius * Math.cos(angle) * this.sizeFactor;
+      this.y = this.baseY + radius * Math.sin(angle * -1) * this.sizeFactor;
+    } else {
+      this.x = this.baseX + radius * Math.cos(angle) * this.sizeFactor;
+      this.y = this.baseY + radius * Math.sin(angle) * this.sizeFactor;
+    }
+
+    console.log(this.x);
   }
 
   setSizeFactor(factor) {

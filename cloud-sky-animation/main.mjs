@@ -27,7 +27,7 @@ function reRender(time) {
     cloud.moveRotational(deltaT, logoAngle, 10);
     cloud.draw(ctx);
   });
-  logoAngle += 40;
+  logoAngle += 0.2;
   logo.text.move(deltaT, backgroundAngle);
   logo.text.draw(ctx);
   requestAnimationFrame(reRender);
