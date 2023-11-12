@@ -24,11 +24,11 @@ function reRender(time) {
     });
   });
   logo.clouds.forEach((cloud) => {
-    cloud.moveRotational(deltaT, logoAngle, 10);
+    cloud.moveRotational(logoAngle, 2);
     cloud.draw(ctx);
   });
   logoAngle += 0.2;
-  logo.text.move(deltaT, backgroundAngle);
+  logo.text.moveRotational(logoAngle, 2);
   logo.text.draw(ctx);
   requestAnimationFrame(reRender);
 }
@@ -96,7 +96,7 @@ function generateLogo() {
   };
   const baseLogoPos = {
     x: ctx.canvas.clientWidth / 2 - 461.5 * logo.sizeFactor,
-    y: (ctx.canvas.clientHeight * 2) / 5 - 282.5 * logo.sizeFactor,
+    y: (ctx.canvas.clientHeight * 1) / 5 - 282.5 * logo.sizeFactor,
   };
   const bigCloud = new InflatTorusCloud({
     y: baseLogoPos.y,

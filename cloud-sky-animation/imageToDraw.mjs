@@ -24,9 +24,9 @@ export default class ImageToDraw {
     this.y = this.y + Math.sin(angle * -1) * this.speed * deltaT;
   }
 
-  moveRotational(deltaT, angle, radius) {
-    this.x = this.baseX + radius + Math.cos(angle) * this.speed * deltaT;
-    this.y = this.baseY + radius + Math.sin(angle * -1) * this.speed * deltaT;
+  moveRotational(angle, radius) {
+    this.x = this.baseX + radius * Math.cos(angle) * this.sizeFactor;
+    this.y = this.baseY + radius * Math.sin(angle * -1) * this.sizeFactor;
   }
 
   draw(ctx) {
