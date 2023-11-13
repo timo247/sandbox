@@ -27,7 +27,7 @@ function reRender(time) {
     cloud.moveRotational(logoAngle, 2);
     cloud.draw(ctx);
   });
-  logoAngle += 0.2;
+  logoAngle += 0.1;
   logo.text.moveRotational(logoAngle, 2);
   logo.text.draw(ctx);
   requestAnimationFrame(reRender);
@@ -46,13 +46,17 @@ function generateClouds() {
       200 * cloudGroup.sizeFactor;
     const groupX = getRandomInt(0, ctx.canvas.clientWidth);
     const groupColor = randomColor({
-      hue: '',
-      luminosity: '',
+      hue: 'blue',
+      luminosity: 'light',
     });
+    const groupBorderColor = '#566D71';
+    // const groupBorderColor = 'black';
+    //const groupColor = generateBlueShadeColor(true);
     const bigCloud = new InflatTorusCloud({
       y: groupY,
       x: groupX,
       color: groupColor,
+      borderColor: groupBorderColor,
       sizeFactor: cloudGroup.sizeFactor,
       shape: 'big',
       flatTorusWidth: ctx.canvas.clientWidth,
@@ -63,6 +67,7 @@ function generateClouds() {
       y: groupY + cloudGroup.sizeFactor * 85,
       x: groupX + cloudGroup.sizeFactor * 197,
       color: groupColor,
+      borderColor: groupBorderColor,
       sizeFactor: cloudGroup.sizeFactor,
       shape: 'medium',
       flatTorusWidth: ctx.canvas.clientWidth,
@@ -73,6 +78,7 @@ function generateClouds() {
       y: groupY + cloudGroup.sizeFactor * 369,
       x: groupX + cloudGroup.sizeFactor * 712,
       color: groupColor,
+      borderColor: groupBorderColor,
       sizeFactor: cloudGroup.sizeFactor,
       shape: 'small',
       flatTorusWidth: ctx.canvas.clientWidth,
@@ -93,6 +99,8 @@ function generateLogo() {
     sizeFactor: 0.6,
     clouds: [],
     text: null,
+    color: '#C1D0D9',
+    borderColor: '#E8EDF1',
   };
   const baseLogoPos = {
     x: ctx.canvas.clientWidth / 2 - 461.5 * logo.sizeFactor,
@@ -103,7 +111,8 @@ function generateLogo() {
     x: baseLogoPos.x,
     baseY: baseLogoPos.y,
     baseX: baseLogoPos.x,
-    color: '#C1D0D9',
+    color: logo.color,
+    borderColor: logo.borderColor,
     sizeFactor: logo.sizeFactor,
     shape: 'big',
     flatTorusWidth: ctx.canvas.clientWidth,
@@ -115,7 +124,8 @@ function generateLogo() {
     x: baseLogoPos.x + logo.sizeFactor * 197,
     baseY: baseLogoPos.y + logo.sizeFactor * 85,
     baseX: baseLogoPos.x + logo.sizeFactor * 197,
-    color: '#C1D0D9',
+    color: logo.color,
+    borderColor: logo.borderColor,
     sizeFactor: logo.sizeFactor,
     shape: 'medium',
     flatTorusWidth: ctx.canvas.clientWidth,
@@ -127,7 +137,8 @@ function generateLogo() {
     x: baseLogoPos.x + logo.sizeFactor * 712,
     baseY: baseLogoPos.y + logo.sizeFactor * 369,
     baseX: baseLogoPos.x + logo.sizeFactor * 712,
-    color: '#C1D0D9',
+    color: logo.color,
+    borderColor: logo.borderColor,
     sizeFactor: logo.sizeFactor,
     shape: 'small',
     flatTorusWidth: ctx.canvas.clientWidth,
@@ -144,8 +155,8 @@ function generateLogo() {
     baseWidth: 597,
   });
 
-  logo.clouds.push(bigCloud);
   logo.clouds.push(mediumCloud);
+  logo.clouds.push(bigCloud);
   logo.clouds.push(smallCloud);
   logo.text = logoText;
 
@@ -205,4 +216,95 @@ function determineGroupSize(withBenfordLaw) {
 
 function calculateAngle(lastAngle) {
   return lastAngle++;
+}
+
+function generateBlueShadeColor(withLogoBlues) {
+  const logoBlues = [
+    {
+      color: '#FFFFFF',
+    },
+    {
+      color: '#F7F9FA',
+    },
+    {
+      color: '#FBFCFD',
+    },
+    {
+      color: '#F3F6F8',
+    },
+    {
+      color: '#ECF0F3',
+    },
+    {
+      color: '#E8EDF1',
+    },
+    {
+      color: '#E4EAEE',
+    },
+    {
+      color: '#D4DFE5',
+    },
+    {
+      color: '#C9D6DE',
+    },
+    {
+      color: '#C1D0D9',
+    },
+  ];
+
+  const possbileBlues = [
+    {
+      color: '#F0FFFF',
+    },
+    {
+      color: '#ADD8E6',
+    },
+    {
+      color: '#B6D0E2',
+    },
+    {
+      color: '#6F8FAF',
+    },
+    {
+      color: '#F0F8FF',
+    },
+    {
+      color: '#B9D9EB',
+    },
+    {
+      color: '#B0C4DE',
+    },
+    {
+      color: '#003153',
+    },
+    {
+      color: '#1E2952',
+    },
+    {
+      color: '#5D8AA8',
+    },
+    {
+      color: '#E1EBEE',
+    },
+    {
+      color: '#00416A',
+    },
+    {
+      color: '#6082B6',
+    },
+    {
+      color: '#4B9CD3',
+    },
+    {
+      color: '#72A0C1',
+    },
+  ];
+
+  if (withLogoBlues) {
+    const n = getRandomInt(0, 9);
+    return logoBlues[n].color;
+  } else {
+    const n = getRandomInt(0, 14);
+    return possbileBlues[n].color;
+  }
 }

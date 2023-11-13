@@ -50,8 +50,6 @@ export default class InflatTorusCloud {
       this.x = this.baseX + radius * Math.cos(angle) * this.sizeFactor;
       this.y = this.baseY + radius * Math.sin(angle) * this.sizeFactor;
     }
-
-    console.log(this.x);
   }
 
   setSizeFactor(factor) {
