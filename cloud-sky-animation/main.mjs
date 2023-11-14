@@ -36,13 +36,17 @@ requestAnimationFrame(reRender);
 
 function generateClouds() {
   const cloudGroups = [];
-  for (let i = 0; i < 100; i++) {
+  const nbClouds = 86 * Math.floor(window.screen.height / 667);
+  for (let i = 0; i < nbClouds; i++) {
     const cloudGroup = {
-      sizeFactor: determineGroupSize(true),
+      sizeFactor: determineGroupSize(),
       clouds: [],
     };
     const groupY =
-      getRandomInt(0, (ctx.canvas.clientHeight * 2) / 5) -
+      getRandomInt(
+        Math.floor(342 * cloudGroup.sizeFactor),
+        ctx.canvas.clientHeight / 3
+      ) -
       200 * cloudGroup.sizeFactor;
     const groupX = getRandomInt(0, ctx.canvas.clientWidth);
     const groupColor = randomColor({
@@ -96,7 +100,7 @@ function generateClouds() {
 
 function generateLogo() {
   const logo = {
-    sizeFactor: 0.6,
+    sizeFactor: 0.5,
     clouds: [],
     text: null,
     color: '#C1D0D9',
@@ -179,132 +183,26 @@ function compareSize(el1, el2) {
   }
 }
 
-function determineGroupSize(withBenfordLaw) {
-  //Benford natural law: in a scope of different values in the nature, we will systematically find the following repartition of numbers: 24x1, 18x2, 15x3, 11x4, 10x5, 9x6, 5x7, 5x8, 5x9
-  if (withBenfordLaw) {
-    let i = getRandomInt(1, 92);
-    if (i <= 24) {
-      return getRandomInt(3, 5) / 100;
-    } else if (i > 24 && i <= 42) {
-      return getRandomInt(7, 10) / 100;
-    } else if (i > 42 && i <= 57) {
-      return getRandomInt(13, 15) / 100;
-    } else if (i > 57 && i <= 66) {
-      return getRandomInt(17, 20) / 100;
-    } else if (i > 66 && i <= 76) {
-      return getRandomInt(23, 25) / 100;
-    } else if (i > 76 && i <= 85) {
-      return getRandomInt(27, 30) / 100;
-    } else if (i > 85 && i <= 90) {
-      return getRandomInt(27, 30) / 100;
-    } else if (i > 90 && i <= 95) {
-      return getRandomInt(33, 35) / 100;
-    } else if (i > 95 && i < 100) {
-      return getRandomInt(37, 40) / 100;
-    }
-  } else {
-    let i = Math.floor(Math.random() * 15) + 1;
-    if (i >= 14) {
-      return getRandomInt(35, 50) / 100;
-    } else if (i >= 10 && i < 14) {
-      return getRandomInt(18, 30) / 100;
-    } else {
-      return getRandomInt(5, 15) / 100;
-    }
-  }
-}
-
-function calculateAngle(lastAngle) {
-  return lastAngle++;
-}
-
-function generateBlueShadeColor(withLogoBlues) {
-  const logoBlues = [
-    {
-      color: '#FFFFFF',
-    },
-    {
-      color: '#F7F9FA',
-    },
-    {
-      color: '#FBFCFD',
-    },
-    {
-      color: '#F3F6F8',
-    },
-    {
-      color: '#ECF0F3',
-    },
-    {
-      color: '#E8EDF1',
-    },
-    {
-      color: '#E4EAEE',
-    },
-    {
-      color: '#D4DFE5',
-    },
-    {
-      color: '#C9D6DE',
-    },
-    {
-      color: '#C1D0D9',
-    },
-  ];
-
-  const possbileBlues = [
-    {
-      color: '#F0FFFF',
-    },
-    {
-      color: '#ADD8E6',
-    },
-    {
-      color: '#B6D0E2',
-    },
-    {
-      color: '#6F8FAF',
-    },
-    {
-      color: '#F0F8FF',
-    },
-    {
-      color: '#B9D9EB',
-    },
-    {
-      color: '#B0C4DE',
-    },
-    {
-      color: '#003153',
-    },
-    {
-      color: '#1E2952',
-    },
-    {
-      color: '#5D8AA8',
-    },
-    {
-      color: '#E1EBEE',
-    },
-    {
-      color: '#00416A',
-    },
-    {
-      color: '#6082B6',
-    },
-    {
-      color: '#4B9CD3',
-    },
-    {
-      color: '#72A0C1',
-    },
-  ];
-
-  if (withLogoBlues) {
-    const n = getRandomInt(0, 9);
-    return logoBlues[n].color;
-  } else {
-    const n = getRandomInt(0, 14);
-    return possbileBlues[n].color;
+function determineGroupSize() {
+  //Use Benford natural law: in a scope of different values in the nature, we will systematically find the following repartition of numbers: 24x1, 18x2, 15x3, 11x4, 10x5, 9x6, 5x7, 5x8, 5x9
+  let i = getRandomInt(1, 92);
+  if (i <= 24) {
+    return getRandomInt(3, 5) / 100;
+  } else if (i > 24 && i <= 42) {
+    return getRandomInt(7, 10) / 100;
+  } else if (i > 42 && i <= 57) {
+    return getRandomInt(13, 15) / 100;
+  } else if (i > 57 && i <= 66) {
+    return getRandomInt(17, 20) / 100;
+  } else if (i > 66 && i <= 76) {
+    return getRandomInt(23, 25) / 100;
+  } else if (i > 76 && i <= 85) {
+    return getRandomInt(27, 30) / 100;
+  } else if (i > 85 && i <= 90) {
+    return getRandomInt(27, 30) / 100;
+  } else if (i > 90 && i <= 95) {
+    return getRandomInt(33, 35) / 100;
+  } else if (i > 95 && i < 100) {
+    return getRandomInt(37, 40) / 100;
   }
 }
