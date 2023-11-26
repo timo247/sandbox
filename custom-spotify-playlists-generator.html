@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Custom Spotify playlists generator</title>
+    <script src="https://open.spotify.com/embed/iframe-api/v1" async></script>
+
+</head>
+
+<body>
+    <main>
+        <h1>Comptes philosophiques de la vie quotidienne</h1>
+        <div id="embed-iframe"></div>
+
+    </main>
+    <script>
+        const playlist = {
+            episodes: [
+                {
+                    uri: "",
+                    title: "",
+                    no: "",
+                    tags: [
+                        "interprétation",
+                        "communication",
+                    ]
+                }
+            ]
+        }
+
+
+
+        window.onSpotifyIframeApiReady = (IFrameAPI) => {
+            const element = document.getElementById('embed-iframe');
+            const options = {
+                uri: 'spotify:episode:0Hv0HTxBu70NPnEGQgenEP'
+            };
+            const callback = (EmbedController) => { };
+            IFrameAPI.createController(element, options, callback);
+        };
+
+
+        function seedEpisodes() {
+            playlist.episodes = [0].uri = "0Hv0HTxBu70NPnEGQgenEP"
+            playlist.episodes = [0].title = "Le contexte dans lequel on s'exprime"
+            playlist.episodes = [0].uri = "303"
+            playlist.episodes = [0].tags.push('communication')
+            playlist.episodes = [0].tags.push('interprétation')
+
+            playlist.episodes = [1].uri = "7MdwFbMrjrGLZCd1QFJu9c"
+            playlist.episodes = [1].title = "Détruire la nature par l'action humaine"
+            playlist.episodes = [1].uri = "302"
+            playlist.episodes = [1].tags.push('nature')
+            playlist.episodes = [1].tags.push('interprétation')
+
+            playlist.episodes = [1].uri = "7aYypJ3cz4oQNMlzGnt0qK"
+            playlist.episodes = [1].title = "Le courage d'entreprendre"
+            playlist.episodes = [1].uri = "301"
+            playlist.episodes = [1].tags.push('entrepreuneuriat')
+            playlist.episodes = [1].tags.push('constance')
+
+            playlist.episodes = [1].uri = "1lXZ6ILac6sBnKhSpmiwhk"
+            playlist.episodes = [1].title = "La constance de Bob"
+            playlist.episodes = [1].uri = "300"
+            playlist.episodes = [1].tags.push('adaptation')
+            playlist.episodes = [1].tags.push('constance')
+
+            playlist.episodes = [1].uri = "4bF1ft92LFvtzLaWcDHYUo"
+            playlist.episodes = [1].title = "Ce qu'il faut faire face à l'impermanence"
+            playlist.episodes = [1].uri = "299"
+            playlist.episodes = [1].tags.push('adaptation')
+            playlist.episodes = [1].tags.push('constance')
+
+
+        }
+    </script>
+</body>
+
+</html>
