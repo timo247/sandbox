@@ -18,6 +18,7 @@
             <div class="episode-wrapper">
                 <span class="episode-title"></span>
                 <button class="remove-episode hidden"><span class="material-icon">remove</span></button>
+                <button class="play-episode hidden"><span class="material-icon">play</span></button>
             </div>
         </div>
     </main>
@@ -30,12 +31,13 @@
                     no: "",
                     tags: []
                 }
-            ]
+            ],
+            iframeController: null,
         }
 
         const episodesList = document.querySelector('.episodes-list-wrapper')
         const episodeNode = document.querySelector('.episode-wrapper')
-        console.log(episodeNode)
+        //console.log(episodeNode)
 
 
         window.onSpotifyIframeApiReady = (IFrameAPI) => {
@@ -43,7 +45,10 @@
             const options = {
                 uri: 'spotify:episode:0Hv0HTxBu70NPnEGQgenEP'
             };
-            const callback = (EmbedController) => { };
+            const callback = (EmbedController) => {
+                playlist.iframeController = EmbedController; // Stock iFrame controller
+
+            };
             IFrameAPI.createController(element, options, callback);
             seedEpisodes();
         };
@@ -83,11 +88,15 @@
                 newEpisodeNode.dataset.no = ep.no
                 newEpisodeNode.querySelector('.episode-title').textContent = `Épisode ${ep.no}: ${ep.title}`
                 //console.log('newEpisodeNode', newEpisodeNode)
-                /* créer un bouton qui load l'épisode dans le player en clique, et un autre qui le supprime de la liste en clique */
                 const newRemoveBtn = newEpisodeNode.querySelector('.remove-episode');
                 newRemoveBtn.classList.toggle('hidden')
                 newRemoveBtn.addEventListener('click', e => {
                     removeEpisodeFromList(ep.no)
+                })
+                const newPlayBtn = newEpisodeNode.querySelector('.play-episode');
+                newPlayBtn.classList.toggle('hidden')
+                newPlayBtn.addEventListener('click', e => {
+                    playEpisode(ep.no)
                 })
                 //console.log(episodesList)
                 episodesList.appendChild(newEpisodeNode);
@@ -97,7 +106,7 @@
         function emptyEpisodesPlayList() {
             const episodesPlaylist = document.querySelector('.episodes-list-wrapper')
             const children = episodesPlaylist.querySelectorAll('.episode-wrapper')
-            console.log(children)
+            //console.log(children)
             for (let i = 1; i < children.length; i++) {
                 episodesPlaylist.removeChild(children[i])
             }
@@ -112,6 +121,19 @@
             emptyEpisodesPlayList()
             generateEpisodesPlaylist()
         }
+
+        function playEpisode(episodeNo) {
+            const episode = playlist.episodes.filter(ep => ep.no == episodeNo)[0]
+            const options = {
+                uri: `spotify:episode:${episode.uri}`
+            };
+            console.log('ouiiii', playlist.iframeController, options.uri)
+            playlist.iframeController.loadUri(options.uri)
+        }
+
+
+
+
     </script>
 </body>
 
