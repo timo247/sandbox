@@ -14,7 +14,12 @@
     <main>
         <h1>Comptes philosophiques de la vie quotidienne</h1>
         <div id="embed-iframe"></div>
-
+        <div class="episodes-list-wrapper">
+            <div class="episode-wrapper">
+                <span class="episode-title"></span>
+                <button class="remove-episode hidden"><span class="material-icon">remove</span></button>
+            </div>
+        </div>
     </main>
     <script>
         const playlist = {
@@ -23,14 +28,14 @@
                     uri: "",
                     title: "",
                     no: "",
-                    tags: [
-                        "interprétation",
-                        "communication",
-                    ]
+                    tags: []
                 }
             ]
         }
 
+        const episodesList = document.querySelector('.episodes-list-wrapper')
+        const episodeNode = document.querySelector('.episode-wrapper')
+        console.log(episodeNode)
 
 
         window.onSpotifyIframeApiReady = (IFrameAPI) => {
@@ -40,43 +45,80 @@
             };
             const callback = (EmbedController) => { };
             IFrameAPI.createController(element, options, callback);
+            seedEpisodes();
         };
 
-
         function seedEpisodes() {
-            playlist.episodes = [0].uri = "0Hv0HTxBu70NPnEGQgenEP"
-            playlist.episodes = [0].title = "Le contexte dans lequel on s'exprime"
-            playlist.episodes = [0].uri = "303"
-            playlist.episodes = [0].tags.push('communication')
-            playlist.episodes = [0].tags.push('interprétation')
+            console.log("coucou")
+            playlist.episodes[0] = {
+                uri: "0Hv0HTxBu70NPnEGQgenEP",
+                title: "Le contexte dans lequel on s'exprime",
+                no: "303",
+                tags: ['communication', 'interprétation']
+            }
+            playlist.episodes[1] = {
+                uri: "7MdwFbMrjrGLZCd1QFJu9c",
+                title: "Détruire la nature par l'action humaine",
+                no: "302",
+                tags: ['nature', 'interprétation']
+            }
+            playlist.episodes[2] = {
+                uri: "7aYypJ3cz4oQNMlzGnt0qK",
+                title: "Le courage d'entreprendre",
+                no: "301",
+                tags: ['adaptation', 'constance']
+            }
+            playlist.episodes[3] = {
+                uri: "4bF1ft92LFvtzLaWcDHYUo",
+                title: "Ce qu'il faut faire face à l'impermanence",
+                no: "300",
+                tags: ['adaptation', 'constance']
+            }
+            generateEpisodesPlaylist()
+        }
 
-            playlist.episodes = [1].uri = "7MdwFbMrjrGLZCd1QFJu9c"
-            playlist.episodes = [1].title = "Détruire la nature par l'action humaine"
-            playlist.episodes = [1].uri = "302"
-            playlist.episodes = [1].tags.push('nature')
-            playlist.episodes = [1].tags.push('interprétation')
+        function generateEpisodesPlaylist() {
+            playlist.episodes.forEach(ep => {
+                const newEpisodeNode = episodeNode.cloneNode(true);
+                newEpisodeNode.dataset.no = ep.no
+                newEpisodeNode.querySelector('.episode-title').textContent = `Épisode ${ep.no}: ${ep.title}`
+                //console.log('newEpisodeNode', newEpisodeNode)
+                /* créer un bouton qui load l'épisode dans le player en clique, et un autre qui le supprime de la liste en clique */
+                const newRemoveBtn = newEpisodeNode.querySelector('.remove-episode');
+                newRemoveBtn.classList.toggle('hidden')
+                newRemoveBtn.addEventListener('click', e => {
+                    removeEpisodeFromList(ep.no)
+                })
+                //console.log(episodesList)
+                episodesList.appendChild(newEpisodeNode);
+            })
+        }
 
-            playlist.episodes = [1].uri = "7aYypJ3cz4oQNMlzGnt0qK"
-            playlist.episodes = [1].title = "Le courage d'entreprendre"
-            playlist.episodes = [1].uri = "301"
-            playlist.episodes = [1].tags.push('entrepreuneuriat')
-            playlist.episodes = [1].tags.push('constance')
+        function emptyEpisodesPlayList() {
+            const episodesPlaylist = document.querySelector('.episodes-list-wrapper')
+            const children = episodesPlaylist.querySelectorAll('.episode-wrapper')
+            console.log(children)
+            for (let i = 1; i < children.length; i++) {
+                episodesPlaylist.removeChild(children[i])
+            }
+        }
 
-            playlist.episodes = [1].uri = "1lXZ6ILac6sBnKhSpmiwhk"
-            playlist.episodes = [1].title = "La constance de Bob"
-            playlist.episodes = [1].uri = "300"
-            playlist.episodes = [1].tags.push('adaptation')
-            playlist.episodes = [1].tags.push('constance')
-
-            playlist.episodes = [1].uri = "4bF1ft92LFvtzLaWcDHYUo"
-            playlist.episodes = [1].title = "Ce qu'il faut faire face à l'impermanence"
-            playlist.episodes = [1].uri = "299"
-            playlist.episodes = [1].tags.push('adaptation')
-            playlist.episodes = [1].tags.push('constance')
-
-
+        function removeEpisodeFromList(episodeNo) {
+            //console.log('playlist episodes before', playlist.episodes, episodeNo, playlist.episodes.filter(ep => ep.no == episodeNo))
+            let episodeIndexToRemove = playlist.episodes.indexOf(playlist.episodes.filter(ep => ep.no == episodeNo)[0])
+            //console.log(episodeIndexToRemove)
+            playlist.episodes.splice(episodeIndexToRemove, 1)
+            //console.log('playlist episodes after', playlist.episodes)
+            emptyEpisodesPlayList()
+            generateEpisodesPlaylist()
         }
     </script>
 </body>
+
+<style>
+    .hidden {
+        display: none;
+    }
+</style>
 
 </html>
