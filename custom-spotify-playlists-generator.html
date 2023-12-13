@@ -23,6 +23,14 @@
         </div>
     </main>
     <script>
+        /*
+            Suite:
+                Implémenter le filtre d'épiosdes à partir de tags selon une list de tags hradcodée, claquée sur les épiosdes seedés ici
+                
+
+
+        */
+
         const playlist = {
             episodes: [
                 {
@@ -33,6 +41,7 @@
                 }
             ],
             iframeController: null,
+            currentEpisodeId: 0
         }
 
         const episodesList = document.querySelector('.episodes-list-wrapper')
@@ -129,7 +138,19 @@
             };
             console.log('ouiiii', playlist.iframeController, options.uri)
             playlist.iframeController.loadUri(options.uri)
+            playlist.iframeController.play()
+            playlist.currentEpisodeId = episodeNo
+            manageListStyle()
         }
+
+        function manageListStyle() {
+            document.querySelectorAll('.episode-wrapper').forEach(ep => {
+                ep.classList.remove('selected-episode')
+            })
+            document.querySelector(`.episode-wrapper[data-no="${playlist.currentEpisodeId}"]`).classList.toggle('selected-episode')
+        }
+
+
 
 
 
@@ -140,6 +161,10 @@
 <style>
     .hidden {
         display: none;
+    }
+
+    .selected-episode {
+        background-color: aqua;
     }
 </style>
 

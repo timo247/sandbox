@@ -1,0 +1,126 @@
+/*
+        Suite:
+            Implémenter le filtre d'épiosdes à partir de tags selon une list de tags hradcodée, claquée sur les épiosdes seedés ici
+    */
+const playlist = {
+  episodes: [
+    {
+      uri: '',
+      title: '',
+      no: '',
+      tags: [],
+    },
+  ],
+  iframeController: null,
+  currentEpisodeId: 0,
+};
+
+const episodesList = document.querySelector('.episodes-list-wrapper');
+const episodeNode = document.querySelector('.episode-wrapper');
+//console.log(episodeNode)
+
+window.onSpotifyIframeApiReady = (IFrameAPI) => {
+  const element = document.getElementById('embed-iframe');
+  const options = {
+    uri: 'spotify:episode:0Hv0HTxBu70NPnEGQgenEP',
+  };
+  const callback = (EmbedController) => {
+    playlist.iframeController = EmbedController; // Stock iFrame controller
+  };
+  IFrameAPI.createController(element, options, callback);
+  seedEpisodes();
+};
+
+function seedEpisodes() {
+  console.log('coucou');
+  playlist.episodes[0] = {
+    uri: '0Hv0HTxBu70NPnEGQgenEP',
+    title: "Le contexte dans lequel on s'exprime",
+    no: '303',
+    tags: ['communication', 'interprétation'],
+  };
+  playlist.episodes[1] = {
+    uri: '7MdwFbMrjrGLZCd1QFJu9c',
+    title: "Détruire la nature par l'action humaine",
+    no: '302',
+    tags: ['nature', 'interprétation'],
+  };
+  playlist.episodes[2] = {
+    uri: '7aYypJ3cz4oQNMlzGnt0qK',
+    title: "Le courage d'entreprendre",
+    no: '301',
+    tags: ['adaptation', 'constance'],
+  };
+  playlist.episodes[3] = {
+    uri: '4bF1ft92LFvtzLaWcDHYUo',
+    title: "Ce qu'il faut faire face à l'impermanence",
+    no: '300',
+    tags: ['adaptation', 'constance'],
+  };
+  generateEpisodesPlaylist();
+}
+
+function generateEpisodesPlaylist() {
+  playlist.episodes.forEach((ep) => {
+    const newEpisodeNode = episodeNode.cloneNode(true);
+    newEpisodeNode.dataset.no = ep.no;
+    newEpisodeNode.querySelector(
+      '.episode-title'
+    ).textContent = `Épisode ${ep.no}: ${ep.title}`;
+    //console.log('newEpisodeNode', newEpisodeNode)
+    const newRemoveBtn = newEpisodeNode.querySelector('.remove-episode');
+    newRemoveBtn.classList.toggle('hidden');
+    newRemoveBtn.addEventListener('click', (e) => {
+      removeEpisodeFromList(ep.no);
+    });
+    const newPlayBtn = newEpisodeNode.querySelector('.play-episode');
+    newPlayBtn.classList.toggle('hidden');
+    newPlayBtn.addEventListener('click', (e) => {
+      playEpisode(ep.no);
+    });
+    //console.log(episodesList)
+    episodesList.appendChild(newEpisodeNode);
+  });
+}
+
+function emptyEpisodesPlayList() {
+  const episodesPlaylist = document.querySelector('.episodes-list-wrapper');
+  const children = episodesPlaylist.querySelectorAll('.episode-wrapper');
+  //console.log(children)
+  for (let i = 1; i < children.length; i++) {
+    episodesPlaylist.removeChild(children[i]);
+  }
+}
+
+function removeEpisodeFromList(episodeNo) {
+  //console.log('playlist episodes before', playlist.episodes, episodeNo, playlist.episodes.filter(ep => ep.no == episodeNo))
+  let episodeIndexToRemove = playlist.episodes.indexOf(
+    playlist.episodes.filter((ep) => ep.no == episodeNo)[0]
+  );
+  //console.log(episodeIndexToRemove)
+  playlist.episodes.splice(episodeIndexToRemove, 1);
+  //console.log('playlist episodes after', playlist.episodes)
+  emptyEpisodesPlayList();
+  generateEpisodesPlaylist();
+}
+
+function playEpisode(episodeNo) {
+  const episode = playlist.episodes.filter((ep) => ep.no == episodeNo)[0];
+  const options = {
+    uri: `spotify:episode:${episode.uri}`,
+  };
+  console.log('ouiiii', playlist.iframeController, options.uri);
+  playlist.iframeController.loadUri(options.uri);
+  playlist.iframeController.play();
+  playlist.currentEpisodeId = episodeNo;
+  manageListStyle();
+}
+
+function manageListStyle() {
+  document.querySelectorAll('.episode-wrapper').forEach((ep) => {
+    ep.classList.remove('selected-episode');
+  });
+  document
+    .querySelector(`.episode-wrapper[data-no="${playlist.currentEpisodeId}"]`)
+    .classList.toggle('selected-episode');
+}
