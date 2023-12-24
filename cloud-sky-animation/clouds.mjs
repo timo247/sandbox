@@ -6,7 +6,7 @@ import ImageToDraw from './imageToDraw.mjs';
 const ctx = document.querySelector('canvas').getContext('2d');
 ctx.canvas.width = ctx.canvas.clientWidth;
 ctx.canvas.height = ctx.canvas.clientHeight;
-console.log('cava heigh:', ctx.canvas.clientWidth);
+console.log('canvas width:', ctx.canvas.clientWidth);
 const cloudGroups = generateClouds();
 const logo = generateLogo();
 let backgroundAngle = 0;
@@ -37,9 +37,13 @@ requestAnimationFrame(reRender);
 function generateClouds() {
   const cloudGroups = [];
   const nbClouds = 86 * Math.floor(window.screen.height / 667);
+  let screenSizeFactor = 1;
+  if (ctx.canvas.width < 606) {
+    screenSizeFactor = ctx.canvas.clientWidth / 606;
+  }
   for (let i = 0; i < nbClouds; i++) {
     const cloudGroup = {
-      sizeFactor: determineGroupSize(),
+      sizeFactor: determineGroupSize() * screenSizeFactor,
       clouds: [],
     };
     const groupY =
@@ -99,8 +103,12 @@ function generateClouds() {
 }
 
 function generateLogo() {
+  let logoSizeFactor = 0.5;
+  if (ctx.canvas.width < 606) {
+    logoSizeFactor = (0.5 * ctx.canvas.clientWidth) / 606;
+  }
   const logo = {
-    sizeFactor: 0.5,
+    sizeFactor: logoSizeFactor,
     clouds: [],
     text: null,
     color: '#C1D0D9',

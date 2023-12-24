@@ -5,22 +5,28 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="style.css">
-    <script type="module" defer src="main.mjs"></script>
+    <link rel="stylesheet" href="assets/style.css">
+    <script type="module" defer src="clouds.mjs"></script>
+    <title>Custom Spotify playlists generator</title>
+    <script src="https://open.spotify.com/embed/iframe-api/v1" async></script>
 </head>
 
 <body>
-    <canvas class="clouds-canvas"></canvas>
-    <script src="player-manager.js"></script>
-    <h1>Comptes philosophiques de la vie quotidienne</h1>
-    <div id="embed-iframe"></div>
-    <div class="episodes-list-wrapper">
-        <div class="episode-wrapper">
-            <span class="episode-title"></span>
-            <button class="remove-episode hidden"><span class="material-icon">remove</span></button>
-            <button class="play-episode hidden"><span class="material-icon">play</span></button>
+    <main>
+        <canvas class="clouds-canvas"></canvas>
+        <script defer src="player-manager.js"></script>
+        <div class="playlist-management-wrapper">
+            <h1>Comptes philosophiques de la vie quotidienne</h1>
+            <div id="embed-iframe"></div>
+            <div class="episodes-list-wrapper">
+                <div class="episode-wrapper">
+                    <span class="episode-title"></span>
+                    <button class="remove-episode hidden"><span class="material-icon">remove</span></button>
+                    <button class="play-episode hidden"><span class="material-icon">play</span></button>
+                </div>
+            </div>
         </div>
-    </div>
+    </main>
 </body>
 
 </html>

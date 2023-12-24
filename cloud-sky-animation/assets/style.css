@@ -1,0 +1,82 @@
+/* Fonts */
+
+@font-face {
+    font-family: 'Poppins';
+    src: url('fonts/Poppins-Bold.ttf');
+    font-weight: black;
+    font-style: normal;
+  }
+
+
+@font-face {
+    font-family: 'Poppins';
+    src: url('fonts/Poppins-Medium.ttf');
+    font-weight: bold;
+    font-style: normal;
+  }
+
+  @font-face{
+    font-family: 'Poppins';
+    src: url('./fonts/Poppins-Light.ttf');
+    font-weight: normal;
+    font-style: normal;
+  }
+
+  @font-face {
+    font-family: 'Poppins';
+    src: url('fonts/Poppins-ExtraLight.ttf');
+    font-weight: light;
+    font-style: normal;
+  }
+
+  @font-face {
+    font-family: 'Poppins';
+    src: url('fonts/Poppins-Italic.ttf');
+    font-weight: light;
+    font-style: italic;
+  }
+
+body {
+    margin: 0;
+    font-family: 'Poppins';
+    font-weight: normal;
+}
+
+.clouds-canvas {
+    background: white;
+    width: 100vw;
+    height: 100vh;
+    position:absolute;
+    top: 0px;
+}
+
+h1 {
+    font-weight: bold;
+    font-style: italic;
+    text-align: center;
+}
+
+.hidden {
+    display: none;
+}
+
+.selected-episode {
+    background-color: aqua;
+}
+
+.playlist-management-wrapper {
+    position: absolute;
+    top: 40%;
+    padding: 15px;
+}
+
+@media screen and (max-width: 600px) {
+    h1 {
+        font-size: 16px;
+    }
+
+    h2 {
+        font-size:14px;
+    }
+
+}
