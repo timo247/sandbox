@@ -1,9 +1,8 @@
 /* Fonts */
 
 @font-face {
-    font-family: 'Poppins';
-    src: url('fonts/Poppins-Bold.ttf');
-    font-weight: black;
+    font-family: 'PoppinsBlack';
+    src: url('fonts/Poppins-Black.ttf');
     font-style: normal;
   }
 
@@ -36,6 +35,16 @@
     font-style: italic;
   }
 
+
+  /* Colors */
+  :root {
+    --app-interaction-1: #C1D0D9;
+    --app-interaction-2: #566D71;
+  }
+
+
+  /*Generic*/
+
 body {
     margin: 0;
     font-family: 'Poppins';
@@ -56,6 +65,10 @@ h1 {
     text-align: center;
 }
 
+h2 {
+  font-family: 'PoppinsBlack';
+}
+
 .hidden {
     display: none;
 }
@@ -70,13 +83,50 @@ h1 {
     padding: 15px;
 }
 
+.theme-selection-wrapper {
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 16px;
+}
+
+.theme-selection-form {
+  margin-left: 16px;
+}
+
+.selected-themes-wrapper {
+  margin-bottom: 16px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.theme-tag {
+  background-color: var(--app-interaction-1);
+  border-radius: 25px;
+  padding: 0px 8px;
+  display: flex;
+}
+
+.theme-tag span {
+  color: var(--app-interaction-2);
+  font-weight: bold;
+}
+
+
+
+/*Responsivity*/
+
 @media screen and (max-width: 600px) {
     h1 {
         font-size: 16px;
     }
 
-    h2 {
+    span, p, h2 {
         font-size:14px;
+    }
+
+    .theme-tag span {
+      font-size: 10px;
     }
 
 }
