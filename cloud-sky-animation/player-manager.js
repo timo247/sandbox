@@ -1,7 +1,4 @@
-/*
-        Suite:
-            Implémenter le filtre d'épiosdes à partir de tags selon une list de tags hradcodée, claquée sur les épiosdes seedés ici
-    */
+/*Global variables */
 const playlist = {
   episodes: [
     {
@@ -15,10 +12,23 @@ const playlist = {
   currentEpisodeId: 0,
 };
 
+const activeTags = [
+  {
+    id: 1,
+    value: 'Sagesse',
+  },
+  {
+    id: 2,
+    value: 'Oppiniatreté',
+  },
+];
+
 const episodesList = document.querySelector('.episodes-list-wrapper');
 const episodeNode = document.querySelector('.episode-wrapper');
-//console.log(episodeNode)
+const tagsList = document.querySelector('.selected-themes-wrapper');
+const tageNode = document.querySelector('.theme-tag-wrapper');
 
+/*Player */
 window.onSpotifyIframeApiReady = (IFrameAPI) => {
   const element = document.getElementById('embed-iframe');
   const options = {
@@ -31,6 +41,7 @@ window.onSpotifyIframeApiReady = (IFrameAPI) => {
   seedEpisodes();
 };
 
+/* Episodes */
 function seedEpisodes() {
   console.log('coucou');
   playlist.episodes[0] = {
@@ -67,7 +78,6 @@ function generateEpisodesPlaylist() {
     newEpisodeNode.querySelector(
       '.episode-title'
     ).textContent = `Épisode ${ep.no}: ${ep.title}`;
-    //console.log('newEpisodeNode', newEpisodeNode)
     const newRemoveBtn = newEpisodeNode.querySelector('.remove-episode');
     newRemoveBtn.classList.toggle('hidden');
     newRemoveBtn.addEventListener('click', (e) => {
@@ -78,7 +88,6 @@ function generateEpisodesPlaylist() {
     newPlayBtn.addEventListener('click', (e) => {
       playEpisode(ep.no);
     });
-    //console.log(episodesList)
     episodesList.appendChild(newEpisodeNode);
   });
 }
@@ -86,20 +95,17 @@ function generateEpisodesPlaylist() {
 function emptyEpisodesPlayList() {
   const episodesPlaylist = document.querySelector('.episodes-list-wrapper');
   const children = episodesPlaylist.querySelectorAll('.episode-wrapper');
-  //console.log(children)
   for (let i = 1; i < children.length; i++) {
     episodesPlaylist.removeChild(children[i]);
   }
 }
 
+//Remplacer emtpyEpisodePlalist par emptyNodesList
 function removeEpisodeFromList(episodeNo) {
-  //console.log('playlist episodes before', playlist.episodes, episodeNo, playlist.episodes.filter(ep => ep.no == episodeNo))
   let episodeIndexToRemove = playlist.episodes.indexOf(
     playlist.episodes.filter((ep) => ep.no == episodeNo)[0]
   );
-  //console.log(episodeIndexToRemove)
   playlist.episodes.splice(episodeIndexToRemove, 1);
-  //console.log('playlist episodes after', playlist.episodes)
   emptyEpisodesPlayList();
   generateEpisodesPlaylist();
 }
@@ -113,14 +119,46 @@ function playEpisode(episodeNo) {
   playlist.iframeController.loadUri(options.uri);
   playlist.iframeController.play();
   playlist.currentEpisodeId = episodeNo;
-  manageListStyle();
+  manageEpisodesListStyle();
 }
 
-function manageListStyle() {
+function manageEpisodesListStyle() {
   document.querySelectorAll('.episode-wrapper').forEach((ep) => {
     ep.classList.remove('selected-episode');
   });
   document
     .querySelector(`.episode-wrapper[data-no="${playlist.currentEpisodeId}"]`)
     .classList.toggle('selected-episode');
+}
+
+/*Tags*/
+function removeTagFromList(tagId) {
+  let tagIndexToRemove = activeTags.indexOf(
+    activeTags.filter((t) => t.id == tagId)[0]
+  );
+  activeTags.remove(tagIndexToRemove, 1);
+  emptyNodesList('selected-themes-wrapper', 'theme-tag-wrapper');
+  generateEpisodesPlaylist();
+}
+
+function generateTagsList() {
+  activeTags.forEach((t) => {
+    const newTagNode = tagNode.cloneNode(true);
+    tagNode.dataset.id = t.id;
+    newTagNode.querySelector('.tag-value').textContent = `${t.value}`;
+    const newRemoveBtn = newTagNode.querySelector('.remove-tag');
+    newRemoveBtn.classList.toggle('hidden');
+    newRemoveBtn.addEventListener('click', (e) => {
+      removeTagFromList(t.no);
+    });
+    tagsList.appendChild(newTagNode);
+  });
+}
+
+function emptyNodesList(listWrapper, childWrapper) {
+  const listToEmpty = document.querySelector(listWrapper);
+  const children = listToEmpty.querySelectorAll(childWrapper);
+  for (let i = 1; i < children.length; i++) {
+    listToEmpty.removeChild(children[i]);
+  }
 }

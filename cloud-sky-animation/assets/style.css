@@ -100,7 +100,7 @@ h2 {
   justify-content: space-between;
 }
 
-.theme-tag {
+.theme-tag-wrapper {
   background-color: var(--app-interaction-1);
   border-radius: 25px;
   padding: 0px 8px;
@@ -112,6 +112,9 @@ h2 {
   font-weight: bold;
 }
 
+.close-theme {
+  margin:auto;
+}
 
 
 /*Responsivity*/

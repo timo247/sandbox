@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="assets/style.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <script type="module" defer src="clouds.mjs"></script>
     <title>Custom Spotify playlists generator</title>
     <script src="https://open.spotify.com/embed/iframe-api/v1" async></script>
@@ -27,8 +28,10 @@
                     </form>
                 </div>
                 <div class="selected-themes-wrapper">
-                    <div class="theme-tag"><span>Sagesse</span></div>
-                    <div class="theme-tag"><span>Oppiniatreté</span></div>
+                    <div class="theme-tag-wrapper hidden"><span class="tag-value"></span><span
+                            class="material-icons remove-tag">close</span></div>
+                    <!--<div class="theme-tag-wrapper"><span class="tag-value">Oppiniatreté</span><span
+                            class="material-icons remove-tag">close</span></div>-->
                 </div>
             </div>
             <div id="embed-iframe"></div>
