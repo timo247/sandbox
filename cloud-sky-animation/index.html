@@ -22,8 +22,8 @@
                 <h2>Épisodes abordant des thèmes</h2>
                 <div class="theme-selection-wrapper"> <span>Choisir les thèmes</span>
                     <form class="theme-selection-form">
-                        <select>
-                            <option selected="true">Ajouter</option>
+                        <select class="possible-themes-wrapper">
+                            <option class="possible-theme" disabled=true selected="true">Ajouter</option>
                         </select>
                     </form>
                 </div>
@@ -36,10 +36,10 @@
             </div>
             <div id="embed-iframe"></div>
             <div class="episodes-list-wrapper">
-                <div class="episode-wrapper">
+                <div class="episode-wrapper hidden">
                     <span class="episode-title"></span>
-                    <button class="remove-episode hidden"><span class="material-icon">remove</span></button>
-                    <button class="play-episode hidden"><span class="material-icon">play</span></button>
+                    <button class="remove-episode"><span class="material-icon">remove</span></button>
+                    <button class="play-episode"><span class="material-icon">play</span></button>
                 </div>
             </div>
         </div>
