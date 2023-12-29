@@ -113,6 +113,25 @@ function generateEpisodesPlaylist() {
   });
 }
 
+function filterEpisodesPlaylist() {
+  playlist.episodes.forEach((ep) => {
+    let keepEpisodeInList = false;
+    activeTags.forEach((tag) => {
+      const lowerCaseEpisodeTags = ep.tags.map((element) => {
+        return element.toLowerCase();
+      });
+      if (lowerCaseEpisodeTags.includes(tag.value.toLowerCase)) {
+        keepEpisodeInList = true;
+      }
+    });
+    if (!keepEpisodeInList) {
+      playlist.episodes.splice(playlist.episode.indexOf(ep), 1);
+    }
+  });
+  emptyEpisodesPlayList();
+  generateEpisodesPlaylist();
+}
+
 function emptyEpisodesPlayList() {
   const episodesPlaylist = document.querySelector('.episodes-list-wrapper');
   const children = episodesPlaylist.querySelectorAll('.episode-wrapper');
@@ -196,29 +215,22 @@ function generateThemesSelectionList() {
     console.log('uno');
   });
   possibleThemesList.addEventListener('change', (e) => {
-    console.log(
-      'chicita',
-      activeTags.filter((tag) => tag.value == possibleThemesList.value)[0]
-    );
     const correspondingThemeData = activeTags.filter(
       (tag) => tag.value == possibleThemesList.value
     )[0];
     if (correspondingThemeData == null) {
-      console.log('quand même');
       activeTags.push({
         id: possibleThemesData.filter(
           (tag) => tag.value == possibleThemesList.value
         )[0].id,
         value: possibleThemesList.value,
       });
-      console.log(activeTags);
       emptyNodesList('.selected-themes-wrapper', '.theme-tag-wrapper');
       generateTagsList();
+      filterEpisodesPlaylist();
     } else {
-      console.log('muchacho');
     }
   });
-  console.log('là', possibleThemesList.value);
 }
 
 //Next: tester la génération de tags en lançant generateTagsList()
