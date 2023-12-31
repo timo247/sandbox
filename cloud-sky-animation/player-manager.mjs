@@ -1,3 +1,5 @@
+import { cloneDeepArray as cloneDeepArray } from './deepArrayClone.mjs';
+
 /*Global variables */
 const playlist = {
   episodes: [
@@ -15,30 +17,65 @@ const playlist = {
 const activeTags = [
   {
     id: 1,
-    value: 'Sagesse',
+    value: 'Communication',
   },
   {
     id: 2,
-    value: 'Oppiniatreté',
+    value: 'Adaptation',
+  },
+  {
+    id: 3,
+    value: 'Constance',
+  },
+  {
+    id: 4,
+    value: 'Interprétation',
   },
 ];
 
 const possibleThemesData = [
   {
     id: 1,
-    value: 'Sagesse',
+    value: 'Communication',
   },
   {
     id: 2,
-    value: 'Oppiniatreté',
+    value: 'Adaptation',
   },
   {
     id: 3,
-    value: 'Amour',
+    value: 'Constance',
   },
   {
     id: 4,
-    value: 'Écoute',
+    value: 'Interprétation',
+  },
+];
+
+const fetchedEpisodes = [
+  {
+    uri: '0Hv0HTxBu70NPnEGQgenEP',
+    title: "Le contexte dans lequel on s'exprime",
+    no: '303',
+    tags: ['communication', 'interprétation'],
+  },
+  {
+    uri: '7MdwFbMrjrGLZCd1QFJu9c',
+    title: "Détruire la nature par l'action humaine",
+    no: '302',
+    tags: ['nature', 'interprétation'],
+  },
+  {
+    uri: '7aYypJ3cz4oQNMlzGnt0qK',
+    title: "Le courage d'entreprendre",
+    no: '301',
+    tags: ['adaptation', 'constance'],
+  },
+  {
+    uri: '4bF1ft92LFvtzLaWcDHYUo',
+    title: "Ce qu'il faut faire face à l'impermanence",
+    no: '300',
+    tags: ['adaptation', 'constance'],
   },
 ];
 
@@ -59,12 +96,23 @@ window.onSpotifyIframeApiReady = (IFrameAPI) => {
     playlist.iframeController = EmbedController; // Stock iFrame controller
   };
   IFrameAPI.createController(element, options, callback);
+  generateThemesSelectionList();
+  generateTagsList();
   seedEpisodes();
 };
 
 /* Episodes */
 function seedEpisodes() {
-  console.log('coucou');
+  /*console.log('coucou');
+  playlist.episodes = cloneDeepArray(fetchedEpisodes);
+  console.log(playlist.episodes);*/
+  if (!playlist || !playlist.episodes) {
+    console.error(
+      "Erreur : L'objet playlist ou sa propriété episodes n'est pas défini."
+    );
+    return;
+  }
+
   playlist.episodes[0] = {
     uri: '0Hv0HTxBu70NPnEGQgenEP',
     title: "Le contexte dans lequel on s'exprime",
@@ -93,19 +141,19 @@ function seedEpisodes() {
 }
 
 function generateEpisodesPlaylist() {
+  console.log('passage dans generateE', playlist.episodes, fetchedEpisodes);
   playlist.episodes.forEach((ep) => {
     const newEpisodeNode = episodeNode.cloneNode(true);
+    newEpisodeNode.classList.toggle('hidden');
     newEpisodeNode.dataset.no = ep.no;
     newEpisodeNode.querySelector(
       '.episode-title'
     ).textContent = `Épisode ${ep.no}: ${ep.title}`;
     const newRemoveBtn = newEpisodeNode.querySelector('.remove-episode');
-    newRemoveBtn.classList.toggle('hidden');
     newRemoveBtn.addEventListener('click', (e) => {
       removeEpisodeFromList(ep.no);
     });
     const newPlayBtn = newEpisodeNode.querySelector('.play-episode');
-    newPlayBtn.classList.toggle('hidden');
     newPlayBtn.addEventListener('click', (e) => {
       playEpisode(ep.no);
     });
@@ -114,10 +162,12 @@ function generateEpisodesPlaylist() {
 }
 
 function filterEpisodesPlaylist() {
+  console.log('on filtre', playlist.episodes);
   playlist.episodes.forEach((ep) => {
     let keepEpisodeInList = false;
     activeTags.forEach((tag) => {
-      const lowerCaseEpisodeTags = ep.tags.map((element) => {
+      const epTagsClone = [...ep.tags];
+      const lowerCaseEpisodeTags = epTagsClone.map((element) => {
         return element.toLowerCase();
       });
       if (lowerCaseEpisodeTags.includes(tag.value.toLowerCase)) {
@@ -125,9 +175,10 @@ function filterEpisodesPlaylist() {
       }
     });
     if (!keepEpisodeInList) {
-      playlist.episodes.splice(playlist.episode.indexOf(ep), 1);
+      playlist.episodes.splice(playlist.episodes.indexOf(ep), 1);
     }
   });
+  console.log('list filtrée', playlist.episodes);
   emptyEpisodesPlayList();
   generateEpisodesPlaylist();
 }
@@ -178,6 +229,7 @@ function removeTagFromList(tagId) {
   activeTags.splice(tagIndexToRemove, 1);
   emptyNodesList('.selected-themes-wrapper', '.theme-tag-wrapper');
   generateTagsList();
+  filterEpisodesPlaylist();
 }
 
 function generateTagsList() {
@@ -234,5 +286,3 @@ function generateThemesSelectionList() {
 }
 
 //Next: tester la génération de tags en lançant generateTagsList()
-generateThemesSelectionList();
-generateTagsList();
