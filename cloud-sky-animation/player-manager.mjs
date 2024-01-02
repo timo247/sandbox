@@ -53,54 +53,54 @@ const possibleThemesData = [
 ];
 
 const fetchedEpisodes = [
-  // {
-  //   uri: '0Hv0HTxBu70NPnEGQgenEP',
-  //   title: "Le contexte dans lequel on s'exprime",
-  //   no: '303',
-  //   tags: ['communication', 'interprétation'],
-  // },
-  // {
-  //   uri: '7MdwFbMrjrGLZCd1QFJu9c',
-  //   title: "Détruire la nature par l'action humaine",
-  //   no: '302',
-  //   tags: ['nature', 'communication'],
-  // },
-  // {
-  //   uri: '7aYypJ3cz4oQNMlzGnt0qK',
-  //   title: "Le courage d'entreprendre",
-  //   no: '301',
-  //   tags: ['adaptation', 'courage'],
-  // },
-  // {
-  //   uri: '4bF1ft92LFvtzLaWcDHYUo',
-  //   title: "Ce qu'il faut faire face à l'impermanence",
-  //   no: '300',
-  //   tags: ['générosité', 'constance'],
-  // },
   {
     uri: '0Hv0HTxBu70NPnEGQgenEP',
     title: "Le contexte dans lequel on s'exprime",
     no: '303',
-    tags: ['saédkasldk', 'interprétation'],
+    tags: ['communication', 'interprétation'],
   },
   {
     uri: '7MdwFbMrjrGLZCd1QFJu9c',
     title: "Détruire la nature par l'action humaine",
     no: '302',
-    tags: ['asdsad', 'interprétation'],
+    tags: ['nature', 'communication'],
   },
   {
     uri: '7aYypJ3cz4oQNMlzGnt0qK',
     title: "Le courage d'entreprendre",
     no: '301',
-    tags: ['adasdasdaptation', 'interprétation'],
+    tags: ['adaptation', 'courage'],
   },
   {
     uri: '4bF1ft92LFvtzLaWcDHYUo',
     title: "Ce qu'il faut faire face à l'impermanence",
     no: '300',
-    tags: ['asdsad', 'interprétation'],
+    tags: ['générosité', 'constance'],
   },
+  // {
+  //   uri: '0Hv0HTxBu70NPnEGQgenEP',
+  //   title: "Le contexte dans lequel on s'exprime",
+  //   no: '303',
+  //   tags: ['saédkasldk', 'interprétation'],
+  // },
+  // {
+  //   uri: '7MdwFbMrjrGLZCd1QFJu9c',
+  //   title: "Détruire la nature par l'action humaine",
+  //   no: '302',
+  //   tags: ['asdsad', 'interprétation'],
+  // },
+  // {
+  //   uri: '7aYypJ3cz4oQNMlzGnt0qK',
+  //   title: "Le courage d'entreprendre",
+  //   no: '301',
+  //   tags: ['adasdasdaptation', 'interprétation'],
+  // },
+  // {
+  //   uri: '4bF1ft92LFvtzLaWcDHYUo',
+  //   title: "Ce qu'il faut faire face à l'impermanence",
+  //   no: '300',
+  //   tags: ['asdsad', 'interprétation'],
+  // },
 ];
 const playlistEpisodes = cloneDeepArray(fetchedEpisodes);
 
@@ -129,7 +129,7 @@ window.onSpotifyIframeApiReady = async (IFrameAPI) => {
 
 /* Episodes */
 function seedEpisodes() {
-  //playlist.episodes = cloneDeepArray(fetchedEpisodes);
+  playlist.episodes = cloneDeepArray(fetchedEpisodes);
   if (!playlist || !playlist.episodes) {
     console.error(
       "Erreur : L'objet playlist ou sa propriété episodes n'est pas défini."
@@ -137,30 +137,30 @@ function seedEpisodes() {
     return;
   }
 
-  playlist.episodes[0] = {
-    uri: '0Hv0HTxBu70NPnEGQgenEP',
-    title: "Le contexte dans lequel on s'exprime",
-    no: '303',
-    tags: ['saédkasldk', 'interprétation'],
-  };
-  playlist.episodes[1] = {
-    uri: '7MdwFbMrjrGLZCd1QFJu9c',
-    title: "Détruire la nature par l'action humaine",
-    no: '302',
-    tags: ['saédkasldk', 'interprétation'],
-  };
-  playlist.episodes[2] = {
-    uri: '7aYypJ3cz4oQNMlzGnt0qK',
-    title: "Le courage d'entreprendre",
-    no: '301',
-    tags: ['saédkasldk', 'interprétation'],
-  };
-  playlist.episodes[3] = {
-    uri: '4bF1ft92LFvtzLaWcDHYUo',
-    title: "Ce qu'il faut faire face à l'impermanence",
-    no: '300',
-    tags: ['saédkasldk', 'interprétation'],
-  };
+  // playlist.episodes[0] = {
+  //   uri: '0Hv0HTxBu70NPnEGQgenEP',
+  //   title: "Le contexte dans lequel on s'exprime",
+  //   no: '303',
+  //   tags: ['saédkasldk', 'interprétation'],
+  // };
+  // playlist.episodes[1] = {
+  //   uri: '7MdwFbMrjrGLZCd1QFJu9c',
+  //   title: "Détruire la nature par l'action humaine",
+  //   no: '302',
+  //   tags: ['saédkasldk', 'interprétation'],
+  // };
+  // playlist.episodes[2] = {
+  //   uri: '7aYypJ3cz4oQNMlzGnt0qK',
+  //   title: "Le courage d'entreprendre",
+  //   no: '301',
+  //   tags: ['saédkasldk', 'interprétation'],
+  // };
+  // playlist.episodes[3] = {
+  //   uri: '4bF1ft92LFvtzLaWcDHYUo',
+  //   title: "Ce qu'il faut faire face à l'impermanence",
+  //   no: '300',
+  //   tags: ['saédkasldk', 'interprétation'],
+  // };
   generateEpisodesPlaylist();
 }
 
