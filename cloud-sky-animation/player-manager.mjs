@@ -77,32 +77,7 @@ const fetchedEpisodes = [
     no: '300',
     tags: ['générosité', 'constance'],
   },
-  // {
-  //   uri: '0Hv0HTxBu70NPnEGQgenEP',
-  //   title: "Le contexte dans lequel on s'exprime",
-  //   no: '303',
-  //   tags: ['saédkasldk', 'interprétation'],
-  // },
-  // {
-  //   uri: '7MdwFbMrjrGLZCd1QFJu9c',
-  //   title: "Détruire la nature par l'action humaine",
-  //   no: '302',
-  //   tags: ['asdsad', 'interprétation'],
-  // },
-  // {
-  //   uri: '7aYypJ3cz4oQNMlzGnt0qK',
-  //   title: "Le courage d'entreprendre",
-  //   no: '301',
-  //   tags: ['adasdasdaptation', 'interprétation'],
-  // },
-  // {
-  //   uri: '4bF1ft92LFvtzLaWcDHYUo',
-  //   title: "Ce qu'il faut faire face à l'impermanence",
-  //   no: '300',
-  //   tags: ['asdsad', 'interprétation'],
-  // },
 ];
-const playlistEpisodes = cloneDeepArray(fetchedEpisodes);
 
 const episodesList = document.querySelector('.episodes-list-wrapper');
 const episodeNode = document.querySelector('.episode-wrapper');
@@ -136,41 +111,10 @@ function seedEpisodes() {
     );
     return;
   }
-
-  // playlist.episodes[0] = {
-  //   uri: '0Hv0HTxBu70NPnEGQgenEP',
-  //   title: "Le contexte dans lequel on s'exprime",
-  //   no: '303',
-  //   tags: ['saédkasldk', 'interprétation'],
-  // };
-  // playlist.episodes[1] = {
-  //   uri: '7MdwFbMrjrGLZCd1QFJu9c',
-  //   title: "Détruire la nature par l'action humaine",
-  //   no: '302',
-  //   tags: ['saédkasldk', 'interprétation'],
-  // };
-  // playlist.episodes[2] = {
-  //   uri: '7aYypJ3cz4oQNMlzGnt0qK',
-  //   title: "Le courage d'entreprendre",
-  //   no: '301',
-  //   tags: ['saédkasldk', 'interprétation'],
-  // };
-  // playlist.episodes[3] = {
-  //   uri: '4bF1ft92LFvtzLaWcDHYUo',
-  //   title: "Ce qu'il faut faire face à l'impermanence",
-  //   no: '300',
-  //   tags: ['saédkasldk', 'interprétation'],
-  // };
   generateEpisodesPlaylist();
 }
 
 function generateEpisodesPlaylist() {
-  console.log(
-    'generateEpisodesPlaylist',
-    playlist.episodes,
-    'activeTags',
-    activeTags
-  );
   playlist.episodes.forEach((ep) => {
     const newEpisodeNode = episodeNode.cloneNode(true);
     newEpisodeNode.classList.toggle('hidden');
@@ -193,52 +137,31 @@ function generateEpisodesPlaylist() {
 }
 
 async function filterEpisodesPlaylist() {
-  //addRemovedEpisodesToPlaylist();
-  console.log('filter with active tags:', activeTags, playlist.episodes);
+  resetEpisodesPlaylist();
   const episodesToRemove = [];
   for (const ep of playlist.episodes) {
-    console.log("on check l'ep", ep);
     let keepEpisodeInList = false;
     activeTags.forEach((tag) => {
       const epTagsClone = [...ep.tags];
       const lowerCaseEpisodeTags = epTagsClone.map((element) => {
         return element.toLowerCase();
       });
-      console.log(
-        'In filter, Epno, lowerCaseEpisodeTags',
-        ep.no,
-        lowerCaseEpisodeTags,
-        lowerCaseEpisodeTags.includes(tag.value.toLowerCase()),
-        'tag comparaison',
-        tag.value
-      );
       if (lowerCaseEpisodeTags.includes(tag.value.toLowerCase())) {
         keepEpisodeInList = true;
       }
     });
     if (!keepEpisodeInList) {
       episodesToRemove.push(ep);
-      console.log("on va enlever l'ep", ep, episodesToRemove);
     }
   }
-  let count = 0;
   episodesToRemove.forEach((epToRemove) => {
-    count++;
-    console.log('mtn, dans la remove', playlist.episodes);
     playlist.episodes.splice(
       playlist.episodes.indexOf(
-        playlist.episodes.filter((x) => x.no == epToRemove.no)[0]
+        playlist.episodes.filter((epToRmv) => epToRmv.no == epToRemove.no)[0]
       ),
       1
     );
-    console.log(
-      'à quoi ressemble mon playlist.episodes',
-      playlist.episodes,
-      'tour',
-      count
-    );
   });
-  console.log('la liste des épisodes', playlist.episodes);
   emptyEpisodesPlayList();
   generateEpisodesPlaylist();
 }
@@ -251,23 +174,7 @@ function emptyEpisodesPlayList() {
   }
 }
 
-function addRemovedEpisodesToPlaylist() {
-  console.log(
-    'Reseed, playlist.episodes, techedEpisodes',
-    playlist.episodes,
-    fetchedEpisodes
-  );
-  // fetchedEpisodes.forEach((ep) => {
-  //   console.log(
-  //     'épiosdes, playlist épisodes, comparaison',
-  //     ep,
-  //     playlist.episodes,
-  //     playlist.episodes.includes(ep)
-  //   );
-  //   if (!playlist.episodes.includes(ep)) {
-  //     playlist.episodes.push(ep);
-  //   }
-  // });
+function resetEpisodesPlaylist() {
   playlist.episodes = cloneDeepArray(fetchedEpisodes);
 }
 
@@ -358,7 +265,12 @@ function generateThemesSelectionList() {
       filterEpisodesPlaylist();
     } else {
     }
+    deselectTags();
   });
+}
+
+function deselectTags() {
+  possibleThemesList.value = 'Ajouter';
 }
 
 //Next: tester la génération de tags en lançant generateTagsList()
