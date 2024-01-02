@@ -53,31 +53,56 @@ const possibleThemesData = [
 ];
 
 const fetchedEpisodes = [
+  // {
+  //   uri: '0Hv0HTxBu70NPnEGQgenEP',
+  //   title: "Le contexte dans lequel on s'exprime",
+  //   no: '303',
+  //   tags: ['communication', 'interprétation'],
+  // },
+  // {
+  //   uri: '7MdwFbMrjrGLZCd1QFJu9c',
+  //   title: "Détruire la nature par l'action humaine",
+  //   no: '302',
+  //   tags: ['nature', 'communication'],
+  // },
+  // {
+  //   uri: '7aYypJ3cz4oQNMlzGnt0qK',
+  //   title: "Le courage d'entreprendre",
+  //   no: '301',
+  //   tags: ['adaptation', 'courage'],
+  // },
+  // {
+  //   uri: '4bF1ft92LFvtzLaWcDHYUo',
+  //   title: "Ce qu'il faut faire face à l'impermanence",
+  //   no: '300',
+  //   tags: ['générosité', 'constance'],
+  // },
   {
     uri: '0Hv0HTxBu70NPnEGQgenEP',
     title: "Le contexte dans lequel on s'exprime",
     no: '303',
-    tags: ['communication', 'interprétation'],
+    tags: ['saédkasldk', 'interprétation'],
   },
   {
     uri: '7MdwFbMrjrGLZCd1QFJu9c',
     title: "Détruire la nature par l'action humaine",
     no: '302',
-    tags: ['nature', 'interprétation'],
+    tags: ['asdsad', 'interprétation'],
   },
   {
     uri: '7aYypJ3cz4oQNMlzGnt0qK',
     title: "Le courage d'entreprendre",
     no: '301',
-    tags: ['adaptation', 'constance'],
+    tags: ['adasdasdaptation', 'interprétation'],
   },
   {
     uri: '4bF1ft92LFvtzLaWcDHYUo',
     title: "Ce qu'il faut faire face à l'impermanence",
     no: '300',
-    tags: ['adaptation', 'constance'],
+    tags: ['asdsad', 'interprétation'],
   },
 ];
+const playlistEpisodes = cloneDeepArray(fetchedEpisodes);
 
 const episodesList = document.querySelector('.episodes-list-wrapper');
 const episodeNode = document.querySelector('.episode-wrapper');
@@ -87,7 +112,7 @@ const possibleThemesList = document.querySelector('.possible-themes-wrapper');
 const possibleThemeNode = document.querySelector('.possible-theme');
 
 /*Player */
-window.onSpotifyIframeApiReady = (IFrameAPI) => {
+window.onSpotifyIframeApiReady = async (IFrameAPI) => {
   const element = document.getElementById('embed-iframe');
   const options = {
     uri: 'spotify:episode:0Hv0HTxBu70NPnEGQgenEP',
@@ -99,13 +124,12 @@ window.onSpotifyIframeApiReady = (IFrameAPI) => {
   generateThemesSelectionList();
   generateTagsList();
   seedEpisodes();
+  await filterEpisodesPlaylist();
 };
 
 /* Episodes */
 function seedEpisodes() {
-  /*console.log('coucou');
-  playlist.episodes = cloneDeepArray(fetchedEpisodes);
-  console.log(playlist.episodes);*/
+  //playlist.episodes = cloneDeepArray(fetchedEpisodes);
   if (!playlist || !playlist.episodes) {
     console.error(
       "Erreur : L'objet playlist ou sa propriété episodes n'est pas défini."
@@ -117,31 +141,36 @@ function seedEpisodes() {
     uri: '0Hv0HTxBu70NPnEGQgenEP',
     title: "Le contexte dans lequel on s'exprime",
     no: '303',
-    tags: ['communication', 'interprétation'],
+    tags: ['saédkasldk', 'interprétation'],
   };
   playlist.episodes[1] = {
     uri: '7MdwFbMrjrGLZCd1QFJu9c',
     title: "Détruire la nature par l'action humaine",
     no: '302',
-    tags: ['nature', 'interprétation'],
+    tags: ['saédkasldk', 'interprétation'],
   };
   playlist.episodes[2] = {
     uri: '7aYypJ3cz4oQNMlzGnt0qK',
     title: "Le courage d'entreprendre",
     no: '301',
-    tags: ['adaptation', 'constance'],
+    tags: ['saédkasldk', 'interprétation'],
   };
   playlist.episodes[3] = {
     uri: '4bF1ft92LFvtzLaWcDHYUo',
     title: "Ce qu'il faut faire face à l'impermanence",
     no: '300',
-    tags: ['adaptation', 'constance'],
+    tags: ['saédkasldk', 'interprétation'],
   };
   generateEpisodesPlaylist();
 }
 
 function generateEpisodesPlaylist() {
-  console.log('passage dans generateE', playlist.episodes, fetchedEpisodes);
+  console.log(
+    'generateEpisodesPlaylist',
+    playlist.episodes,
+    'activeTags',
+    activeTags
+  );
   playlist.episodes.forEach((ep) => {
     const newEpisodeNode = episodeNode.cloneNode(true);
     newEpisodeNode.classList.toggle('hidden');
@@ -151,7 +180,9 @@ function generateEpisodesPlaylist() {
     ).textContent = `Épisode ${ep.no}: ${ep.title}`;
     const newRemoveBtn = newEpisodeNode.querySelector('.remove-episode');
     newRemoveBtn.addEventListener('click', (e) => {
-      removeEpisodeFromList(ep.no);
+      removeEpisodeFromList(ep);
+      emptyEpisodesPlayList();
+      generateEpisodesPlaylist();
     });
     const newPlayBtn = newEpisodeNode.querySelector('.play-episode');
     newPlayBtn.addEventListener('click', (e) => {
@@ -161,24 +192,53 @@ function generateEpisodesPlaylist() {
   });
 }
 
-function filterEpisodesPlaylist() {
-  console.log('on filtre', playlist.episodes);
-  playlist.episodes.forEach((ep) => {
+async function filterEpisodesPlaylist() {
+  //addRemovedEpisodesToPlaylist();
+  console.log('filter with active tags:', activeTags, playlist.episodes);
+  const episodesToRemove = [];
+  for (const ep of playlist.episodes) {
+    console.log("on check l'ep", ep);
     let keepEpisodeInList = false;
     activeTags.forEach((tag) => {
       const epTagsClone = [...ep.tags];
       const lowerCaseEpisodeTags = epTagsClone.map((element) => {
         return element.toLowerCase();
       });
-      if (lowerCaseEpisodeTags.includes(tag.value.toLowerCase)) {
+      console.log(
+        'In filter, Epno, lowerCaseEpisodeTags',
+        ep.no,
+        lowerCaseEpisodeTags,
+        lowerCaseEpisodeTags.includes(tag.value.toLowerCase()),
+        'tag comparaison',
+        tag.value
+      );
+      if (lowerCaseEpisodeTags.includes(tag.value.toLowerCase())) {
         keepEpisodeInList = true;
       }
     });
     if (!keepEpisodeInList) {
-      playlist.episodes.splice(playlist.episodes.indexOf(ep), 1);
+      episodesToRemove.push(ep);
+      console.log("on va enlever l'ep", ep, episodesToRemove);
     }
+  }
+  let count = 0;
+  episodesToRemove.forEach((epToRemove) => {
+    count++;
+    console.log('mtn, dans la remove', playlist.episodes);
+    playlist.episodes.splice(
+      playlist.episodes.indexOf(
+        playlist.episodes.filter((x) => x.no == epToRemove.no)[0]
+      ),
+      1
+    );
+    console.log(
+      'à quoi ressemble mon playlist.episodes',
+      playlist.episodes,
+      'tour',
+      count
+    );
   });
-  console.log('list filtrée', playlist.episodes);
+  console.log('la liste des épisodes', playlist.episodes);
   emptyEpisodesPlayList();
   generateEpisodesPlaylist();
 }
@@ -191,14 +251,32 @@ function emptyEpisodesPlayList() {
   }
 }
 
+function addRemovedEpisodesToPlaylist() {
+  console.log(
+    'Reseed, playlist.episodes, techedEpisodes',
+    playlist.episodes,
+    fetchedEpisodes
+  );
+  // fetchedEpisodes.forEach((ep) => {
+  //   console.log(
+  //     'épiosdes, playlist épisodes, comparaison',
+  //     ep,
+  //     playlist.episodes,
+  //     playlist.episodes.includes(ep)
+  //   );
+  //   if (!playlist.episodes.includes(ep)) {
+  //     playlist.episodes.push(ep);
+  //   }
+  // });
+  playlist.episodes = cloneDeepArray(fetchedEpisodes);
+}
+
 //Remplacer emtpyEpisodePlalist par emptyNodesList
-function removeEpisodeFromList(episodeNo) {
+function removeEpisodeFromList(episode) {
   let episodeIndexToRemove = playlist.episodes.indexOf(
-    playlist.episodes.filter((ep) => ep.no == episodeNo)[0]
+    playlist.episodes.filter((ep) => ep.no == episode.no)[0]
   );
   playlist.episodes.splice(episodeIndexToRemove, 1);
-  emptyEpisodesPlayList();
-  generateEpisodesPlaylist();
 }
 
 function playEpisode(episodeNo) {
@@ -255,7 +333,6 @@ function emptyNodesList(listWrapper, childWrapper) {
 }
 
 function generateThemesSelectionList() {
-  console.log('ici', possibleThemesList.value);
   possibleThemesData.forEach((themeData) => {
     const themeOption = possibleThemeNode.cloneNode(true);
     themeOption.dataset.id = themeData.id;
@@ -264,7 +341,6 @@ function generateThemesSelectionList() {
     themeOption.removeAttribute('disabled');
     themeOption.removeAttribute('selected');
     possibleThemesList.appendChild(themeOption);
-    console.log('uno');
   });
   possibleThemesList.addEventListener('change', (e) => {
     const correspondingThemeData = activeTags.filter(
