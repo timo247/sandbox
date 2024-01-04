@@ -131,7 +131,27 @@ function generateEpisodesPlaylist() {
     const newPlayBtn = newEpisodeNode.querySelector('.play-episode');
     newPlayBtn.addEventListener('click', (e) => {
       playEpisode(ep.no);
+      const episodeDiv = e.target.parentNode.parentNode;
+      managePauseEpisodeButtons();
+      e.target.parentNode.classList.add('hidden');
+      episodeDiv.querySelector('.pause-episode').classList.remove('hidden');
+      /*
+      Coder une fonction qui remet à pause la valeur de pause episode de l'ancien épisode cliqué et ajoute hidden
+      */
     });
+    const newPauseBtn = newEpisodeNode.querySelector('.pause-episode');
+    newPauseBtn.addEventListener('click', (e) => {
+      console.log('pausedButton', e.target);
+      if (e.target.textContent == 'pause') {
+        e.target.textContent = 'play';
+        e.target.parentNode.classList.add('previously-played');
+      } else {
+        e.target.textContent = 'pause';
+        e.target.parentNode.classList.remove('previously-played');
+      }
+      playlist.iframeController.togglePlay();
+    });
+
     episodesList.appendChild(newEpisodeNode);
   });
 }
@@ -204,6 +224,17 @@ function manageEpisodesListStyle() {
   document
     .querySelector(`.episode-wrapper[data-no="${playlist.currentEpisodeId}"]`)
     .classList.toggle('selected-episode');
+}
+
+function managePauseEpisodeButtons() {
+  const pauseEpisodeButtons = document.querySelectorAll('.pause-episode');
+  pauseEpisodeButtons.forEach((btn) => {
+    btn.classList.add('hidden');
+  });
+  const playEpisodeButtons = document.querySelectorAll('.play-episode');
+  playEpisodeButtons.forEach((btn) => {
+    btn.classList.remove('hidden');
+  });
 }
 
 /*Tags*/
