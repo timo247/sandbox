@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="assets/style.css">
+    <title>Stars rating in form</title>
+    <!--<script src="https://open.spotify.com/embed/iframe-api/v1" async></script>-->
+</head>
+
+<body>
+    <main>
+        <div>
+            <form>
+                <input type="number" class="hidden star-rating-input" />
+                <div class="stars"><span class="star"></span></div>
+            </form>
+        </div>
+    </main>
+    <script>
+        const spanStar = document.querySelector('.star');
+        function generateStarRating() {
+            for (let i = 0; i < 5; i++) {
+                spanStarClone = spanStar.cloneNode(true);
+                spanStarClone.setAttribute('data-grade', i);
+                spanStarClone.textContent = '★';
+                document.querySelector('.stars').appendChild(spanStarClone);
+                spanStarClone.addEventListener('mouseover', e => {
+                    const starElements = document.querySelectorAll('.star').filter(span => span.dataset.grade <= e.target.dataset.grade)
+                    starElements.forEach(spanEl => {
+                        spanEl.classList.add('hovered-star')
+                    })
+                })
+                spanStarClone.addEventListener('click', e => {
+                    const starElements = document.querySelectorAll('.star').filter(span => span.dataset.grade <= e.target.dataset.grade)
+                    starElements.forEach(spanEl => {
+                        spanEl.classList.add('clicked-star')
+                        document.querySelector('.star-rating-input').setAttribute('value', e.target.dataset.grade)
+                    })
+                })
+            }
+        }
+        generateStarRating();
+    </script>
+</body>
+
+</html>

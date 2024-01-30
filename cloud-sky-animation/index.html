@@ -9,7 +9,7 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <script type="module" defer src="clouds.mjs"></script>
     <title>Custom Spotify playlists generator</title>
-    <script src="https://open.spotify.com/embed/iframe-api/v1" async></script>
+    <!--<script src="https://open.spotify.com/embed/iframe-api/v1" async></script>-->
 </head>
 
 <body>
@@ -30,12 +30,11 @@
                 <div class="selected-themes-wrapper">
                     <div class="theme-tag-wrapper hidden"><span class="tag-value"></span><span
                             class="material-icons remove-tag">close</span></div>
-                    <!--<div class="theme-tag-wrapper"><span class="tag-value">Oppiniatreté</span><span
-                            class="material-icons remove-tag">close</span></div>-->
                 </div>
             </div>
             <div id="embed-iframe"></div>
             <div class="episodes-list-wrapper">
+                <span class="number-of-episodes"></span>
                 <div class="episode-wrapper hidden">
                     <span class="episode-title"></span>
                     <button class="remove-episode"><span class="material-icon">remove</span></button>

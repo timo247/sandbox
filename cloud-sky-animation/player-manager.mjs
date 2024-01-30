@@ -1,4 +1,5 @@
 import { cloneDeepArray as cloneDeepArray } from './deepArrayClone.mjs';
+import { apiUrl as apiUrl, fetchData as fetchData } from './api.mjs';
 
 /*Global variables */
 const playlist = {
@@ -79,6 +80,9 @@ const fetchedEpisodes = [
   },
 ];
 
+// const fetchedEpisodes = fetchData(`${apiUrl}/episodes`);
+// console.log('fetched episodes', fetchedEpisodes);
+
 const episodesList = document.querySelector('.episodes-list-wrapper');
 const episodeNode = document.querySelector('.episode-wrapper');
 const tagsList = document.querySelector('.selected-themes-wrapper');
@@ -102,6 +106,11 @@ window.onSpotifyIframeApiReady = async (IFrameAPI) => {
   await filterEpisodesPlaylist();
 };
 
+generateTagsList();
+seedEpisodes();
+await filterEpisodesPlaylist();
+generateThemesSelectionList();
+
 /* Episodes */
 function seedEpisodes() {
   playlist.episodes = cloneDeepArray(fetchedEpisodes);
@@ -115,6 +124,9 @@ function seedEpisodes() {
 }
 
 function generateEpisodesPlaylist() {
+  document.querySelector(
+    '.number-of-episodes'
+  ).textContent = `${playlist.episodes.length}épisodes`;
   playlist.episodes.forEach((ep) => {
     const newEpisodeNode = episodeNode.cloneNode(true);
     newEpisodeNode.classList.toggle('hidden');
