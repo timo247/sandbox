@@ -20,14 +20,14 @@
         </div>
     </main>
     <script>
-        const spanStar = document.querySelector('.star');
-        function generateStarRating() {
+        function generateStarRating(inputSelector, starsDivSelector, spanStarSelector) {
+            const spanStar = document.querySelector(spanStarSelector);
             for (let i = 0; i < 5; i++) {
                 spanStarClone = spanStar.cloneNode(true);
                 spanStarClone.setAttribute('data-grade', i + 1);
                 spanStarClone.textContent = '★';
                 spanStarClone.addEventListener('mouseover', e => {
-                    const starElements = document.querySelectorAll('.star')
+                    const starElements = document.querySelectorAll(spanStarSelector)
                     starElements.forEach(el => {
                         console.log(e.target.dataset.grade, el.dataset.grade)
                         if (el.dataset.grade <= e.target.dataset.grade) {
@@ -38,17 +38,17 @@
                     })
                 })
                 spanStarClone.addEventListener('click', e => {
-                    document.querySelectorAll('.star').forEach(starEl => { starEl.classList.remove('clicked-star') })
+                    document.querySelectorAll(spanStarSelector).forEach(starEl => { starEl.classList.remove('clicked-star') })
                     e.target.classList.add('clicked-star')
-                    document.querySelector('.star-rating-input').setAttribute('value', e.target.dataset.grade)
+                    document.querySelector(inputSelector).setAttribute('value', e.target.dataset.grade)
                 })
-                document.querySelector('.stars').appendChild(spanStarClone);
+                document.querySelector(starsDivSelector).appendChild(spanStarClone);
             }
         }
-        generateStarRating();
+        generateStarRating('.star-rating-input', '.stars', '.star');
     </script>
     <style>
-        .stcar.hovered-star {
+        .star.hovered-star {
             color: #31708f;
         }
 
