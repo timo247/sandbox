@@ -26,7 +26,7 @@ while IFS= read -r line; do
     IFS=',' read -r podcast_id id no title description spotify_uri sound_quality_rating content_quality_rating created_at updated_at <<< "$line"
     
     # Formater les valeurs de chaque colonne pour les inclure dans la requête SQL
-    values="($podcast_id, $id, $no, '$title', '$description', '$spotify_uri', $sound_quality_rating, $content_quality_rating, '$created_at', '$updated_at')"
+    values="($podcast_id, $id, $no, \"$title\", \"$description\", \"$spotify_uri\", $sound_quality_rating, $content_quality_rating, \"$created_at\", \"$updated_at\")"
     
     # Ajouter les valeurs formatées à la requête SQL
     insert_query="$insert_query$values,"
