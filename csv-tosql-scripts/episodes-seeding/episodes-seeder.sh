@@ -12,10 +12,13 @@ columns="podcast_id,id,no,title,description,spotify_uri,sound_quality_rating,con
 # Commande pour la requête SQL
 insert_query="INSERT INTO $table_name ($columns) VALUES "
 
+line_number=0
+
 # Lire le fichier CSV ligne par ligne
 while IFS= read -r line; do
+    ((line_number++))
     # Ignorer la première ligne (en-tête)
-    if [[ "$line" == "podcast_id,id,no,title,description,spotify_uri,sound_quality_rating,content_quality_rating,created_at,updated_at" ]]; then
+    if [[ "$line_number" == 1 ]]; then
         continue
     fi
     

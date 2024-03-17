@@ -1,4 +1,4 @@
-podcast_id,id,no,title,description,spotify_uri,sound_quality_rating,content_quality_rating,created_at,updated_at
-1,1,1,Episode 1,Description de l'épisode 1,spotify:episode:XXXXXXXXX,4,5,2024-03-17 08:00:00,2024-03-17 08:00:00
-1,2,2,Episode 2,Description de l'épisode 2,spotify:episode:YYYYYYYYY,3,4,2024-03-17 09:00:00,2024-03-17 09:00:00
-2,3,1,Episode 1,Description de l'épisode 1 pour le podcast 2,spotify:episode:ZZZZZZZZZ,5,4,2024-03-17 10:00:00,2024-03-17 10:00:00
+podcast_id,no,title,description,spotify_uri,sound_quality_rating,content_quality_rating,created_at,updated_at
+1,1,Episode 1,Description de l'épisode 1,spotify:episode:XXXXXXXXX,4,5,2024-03-17 08:00:00,2024-03-17 08:00:00
+1,2,Episode 2,Description de l'épisode 2,spotify:episode:YYYYYYYYY,3,4,2024-03-17 09:00:00,2024-03-17 09:00:00
+2,1,Episode 1,Description de l'épisode 1 pour le podcast 2,spotify:episode:ZZZZZZZZZ,5,4,2024-03-17 10:00:00,2024-03-17 10:00:00
