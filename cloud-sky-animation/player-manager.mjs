@@ -1,6 +1,24 @@
 import { cloneDeepArray as cloneDeepArray } from './deepArrayClone.mjs';
 import { apiUrl as apiUrl, fetchData as fetchData } from './api.mjs';
 
+function testGetData() {
+  console.log('test data');
+  //fetch('http://127.0.0.1:8000/api/episodes', {
+  fetch('https://dev.timothee-dione.ch/anbu-savana/episodes', {
+    method: 'GET',
+    headers: {
+      'Content-Type': '*',
+    },
+  })
+    .then((response) => {
+      console.log('loa réponse:', response);
+      return;
+    })
+    .catch((error) => {
+      console.log('error', error);
+    });
+}
+
 /*Global variables */
 const playlist = {
   episodes: [
@@ -142,6 +160,7 @@ function generateEpisodesPlaylist() {
     });
     const newPlayBtn = newEpisodeNode.querySelector('.play-episode');
     newPlayBtn.addEventListener('click', (e) => {
+      testGetData();
       playEpisode(ep.no);
       const episodeDiv = e.target.parentNode.parentNode;
       managePauseEpisodeButtons();
@@ -153,7 +172,6 @@ function generateEpisodesPlaylist() {
     });
     const newPauseBtn = newEpisodeNode.querySelector('.pause-episode');
     newPauseBtn.addEventListener('click', (e) => {
-      console.log('pausedButton', e.target);
       if (e.target.textContent == 'pause') {
         e.target.textContent = 'play';
         e.target.parentNode.classList.add('previously-played');

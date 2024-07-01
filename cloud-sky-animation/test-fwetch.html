@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <script>
+        function testGetData() {
+            //updater la config de live server
+            // chercher si les foreign keys fonctionne depuis php myadmin
+            // https://copyprogramming.com/howto/how-to-implement-cascade-on-delete-in-laravel-one-to-many-relation
+
+            fetch('http://127.0.0.1:8000/api/episodes', {
+                //fetch('https://swapi.dev/api/', {
+                method: 'GET',
+                redirect: "follow"
+            })
+                .then((response) => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then((data) => {
+                    console.log('loa réponse:', data);
+                    return data;
+                })
+                .catch((error) => {
+                    console.log('error', error);
+                });
+            return false;
+        }
+        document.addEventListener("DOMContentLoaded", function (event) {
+            testGetData();
+        });
+    </script>
+</head>
+
+<body>
+    <main>
+    </main>
+</body>
+
+</html>

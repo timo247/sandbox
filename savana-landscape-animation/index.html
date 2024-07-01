@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Animation SVG</title>
+    <style>
+        svg {
+            width: 100%;
+            height: auto;
+        }
+
+        #cloud1,
+        #cloud2 {
+            animation: moveClouds 20s linear infinite;
+        }
+
+        @keyframes moveClouds {
+            0% {
+                transform: translateX(0);
+            }
+
+            100% {
+                transform: translateX(800px);
+            }
+        }
+
+        #grassBlade1,
+        #grassBlade2 {
+            animation: swayGrass 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes swayGrass {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(5deg);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <svg width="800" height="600" xmlns="http://www.w3.org/2000/svg">
+        <g id="landscape">
+            <rect id="sky" width="800" height="300" fill="skyblue" />
+            <rect id="grass" y="300" width="800" height="300" fill="green" />
+            <circle id="sun" cx="700" cy="100" r="50" fill="yellow" />
+            <rect id="cloud1" x="100" y="50" width="150" height="50" fill="white" />
+            <rect id="cloud2" x="500" y="80" width="200" height="60" fill="white" />
+            <line id="grassBlade1" x1="150" y1="400" x2="150" y2="350" stroke="darkgreen" stroke-width="2" />
+            <line id="grassBlade2" x1="180" y1="400" x2="180" y2="350" stroke="darkgreen" stroke-width="2" />
+        </g>
+    </svg>
+</body>
+
+</html>
