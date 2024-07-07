@@ -11,6 +11,20 @@
             height: auto;
         }
 
+        .grass {
+            animation: changeColor 2s infinite alternate;
+        }
+
+        @keyframes changeColor {
+            0% {
+                fill: red;
+            }
+
+            100% {
+                fill: blue;
+            }
+        }
+
         #cloud1,
         #cloud2 {
             animation: moveClouds 20s linear infinite;
@@ -27,7 +41,8 @@
         }
 
         #grassBlade1,
-        #grassBlade2 {
+        #grassBlade2,
+        .grass {
             animation: swayGrass 2s ease-in-out infinite alternate;
         }
 
@@ -44,7 +59,11 @@
 </head>
 
 <body>
-    <svg width="800" height="600" xmlns="http://www.w3.org/2000/svg">
+    <object id="svg-object" type="image/svg+xml" data="./background/fond/test.svg">
+        Votre navigateur ne supporte pas les fichiers SVG.
+    </object>
+
+    <!-- <svg width="800" height="600" xmlns="http://www.w3.org/2000/svg">
         <g id="landscape">
             <rect id="sky" width="800" height="300" fill="skyblue" />
             <rect id="grass" y="300" width="800" height="300" fill="green" />
@@ -52,9 +71,21 @@
             <rect id="cloud1" x="100" y="50" width="150" height="50" fill="white" />
             <rect id="cloud2" x="500" y="80" width="200" height="60" fill="white" />
             <line id="grassBlade1" x1="150" y1="400" x2="150" y2="350" stroke="darkgreen" stroke-width="2" />
+            <path id="grassBlade1" d="M1225.53 3.58398C1224.74 7.73325 1224.23 11.7789 1223.77 15.9565" stroke="black"
+                stroke-width="3" stroke-linecap="round" />
             <line id="grassBlade2" x1="180" y1="400" x2="180" y2="350" stroke="darkgreen" stroke-width="2" />
         </g>
-    </svg>
+    </svg> -->
 </body>
+
+<script>
+    document.getElementById('svg-object').addEventListener('load', function () {
+        // Récupérer le contenu SVG et appliquer les styles CSS
+        var svgDoc = this.contentDocument;
+        var svgElement = svgDoc.querySelector('.anim-circle');
+        svgElement.classList.add('anim-circle');
+    });
+
+</script>
 
 </html>

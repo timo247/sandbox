@@ -1,0 +1,135 @@
+/* Fonts */
+
+@font-face {
+    font-family: 'PoppinsBlack';
+    src: url('fonts/Poppins-Black.ttf');
+    font-style: normal;
+  }
+
+
+@font-face {
+    font-family: 'Poppins';
+    src: url('fonts/Poppins-Medium.ttf');
+    font-weight: bold;
+    font-style: normal;
+  }
+
+  @font-face{
+    font-family: 'Poppins';
+    src: url('./fonts/Poppins-Light.ttf');
+    font-weight: normal;
+    font-style: normal;
+  }
+
+  @font-face {
+    font-family: 'Poppins';
+    src: url('fonts/Poppins-ExtraLight.ttf');
+    font-weight: light;
+    font-style: normal;
+  }
+
+  @font-face {
+    font-family: 'Poppins';
+    src: url('fonts/Poppins-Italic.ttf');
+    font-weight: light;
+    font-style: italic;
+  }
+
+
+  /* Colors */
+  :root {
+    --app-interaction-1: #C1D0D9;
+    --app-interaction-2: #566D71;
+  }
+
+
+  /*Generic*/
+
+body {
+    margin: 0;
+    font-family: 'Poppins';
+    font-weight: normal;
+}
+
+.clouds-canvas {
+    background: white;
+    width: 100vw;
+    height: 100vh;
+    position:absolute;
+    top: 0px;
+}
+
+h1 {
+    font-weight: bold;
+    font-style: italic;
+    text-align: center;
+}
+
+h2 {
+  font-family: 'PoppinsBlack';
+}
+
+.hidden {
+    display: none !important;
+}
+
+.selected-episode {
+    background-color: aqua;
+}
+
+.playlist-management-wrapper {
+    position: absolute;
+    top: 40%;
+    padding: 15px;
+}
+
+.theme-selection-wrapper {
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 16px;
+}
+
+.theme-selection-form {
+  margin-left: 16px;
+}
+
+.selected-themes-wrapper {
+  margin-bottom: 16px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.theme-tag-wrapper {
+  background-color: var(--app-interaction-1);
+  border-radius: 25px;
+  padding: 0px 8px;
+  display: flex;
+}
+
+.theme-tag span {
+  color: var(--app-interaction-2);
+  font-weight: bold;
+}
+
+.close-theme {
+  margin:auto;
+}
+
+
+/*Responsivity*/
+
+@media screen and (max-width: 600px) {
+    h1 {
+        font-size: 16px;
+    }
+
+    span, p, h2 {
+        font-size:14px;
+    }
+
+    .theme-tag span {
+      font-size: 10px;
+    }
+
+}
