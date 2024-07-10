@@ -30,6 +30,7 @@ export default class ImageToDraw {
   }
 
   draw(ctx) {
+    console.log('image:', this);
     const image = new Image();
     image.src = this.imagePath;
     if (this.baseWidth == 0) {
