@@ -19,14 +19,25 @@ function reRender(time) {
 }
 requestAnimationFrame(reRender);
 
+const desktopLandscapeElementsGeometry = {
+  grass: {},
+  ground: {},
+  mountains: {},
+  birds: {},
+  clouds: {},
+  leafs: {},
+  trunk: {
+    width: ctx.canvas.clientWidth * 0.19,
+    height: ctx.canvas.clientHeight * 0.44,
+    x: 1096,
+    y: 528,
+  },
+};
+
 const tree = new ImageToDraw({
-  imagePath: './assets/images/tree/tronc.svg',
-  x: ctx.canvas.clientWidth / 2,
-  y: ctx.canvas.clientHeight / 2,
-  baseX: ctx.canvas.clientWidth + 5,
-  baseY: ctx.canvas.clientHeight + 5,
-  sizeFactor: 1,
-  speed: 0.08,
-  //baseHeight: 293,
-  //baseWidth: 597,
+  imagePath: './assets/images/tree/trunk.svg',
+  x: desktopLandscapeElementsGeometry.trunk.x,
+  y: desktopLandscapeElementsGeometry.trunk.y,
+  baseWidth: desktopLandscapeElementsGeometry.trunk.width,
+  baseHeight: desktopLandscapeElementsGeometry.height,
 });
