@@ -13,8 +13,8 @@ function reRender(time) {
   lastTime = time;
   ctx.canvas.height = ctx.canvas.clientHeight;
   ctx.canvas.width = ctx.canvas.clientWidth;
-  tree.move(deltaT, 15);
-  tree.draw(ctx);
+  trunk.draw(ctx);
+  leafs.draw(ctx);
   requestAnimationFrame(reRender);
 }
 requestAnimationFrame(reRender);
@@ -25,19 +25,32 @@ const desktopLandscapeElementsGeometry = {
   mountains: {},
   birds: {},
   clouds: {},
-  leafs: {},
+  leafs: {
+    width: ctx.canvas.clientWidth * 0.35,
+    height: ctx.canvas.clientHeight * 0.26,
+    x: ctx.canvas.clientWidth * 0.54,
+    y: ctx.canvas.clientHeight * 0.39,
+  },
   trunk: {
     width: ctx.canvas.clientWidth * 0.19,
     height: ctx.canvas.clientHeight * 0.44,
-    x: 1096,
-    y: 528,
+    x: ctx.canvas.clientWidth * 0.63,
+    y: ctx.canvas.clientHeight * 0.54,
   },
 };
 
-const tree = new ImageToDraw({
+const trunk = new ImageToDraw({
   imagePath: './assets/images/tree/trunk.svg',
   x: desktopLandscapeElementsGeometry.trunk.x,
   y: desktopLandscapeElementsGeometry.trunk.y,
   baseWidth: desktopLandscapeElementsGeometry.trunk.width,
-  baseHeight: desktopLandscapeElementsGeometry.height,
+  baseHeight: desktopLandscapeElementsGeometry.trunk.height,
+});
+
+const leafs = new ImageToDraw({
+  imagePath: './assets/images/tree/leafs.svg',
+  x: desktopLandscapeElementsGeometry.leafs.x,
+  y: desktopLandscapeElementsGeometry.leafs.y,
+  baseWidth: desktopLandscapeElementsGeometry.leafs.width,
+  baseHeight: desktopLandscapeElementsGeometry.leafs.height,
 });
