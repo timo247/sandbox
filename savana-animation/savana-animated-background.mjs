@@ -19,6 +19,13 @@ function reRender(time) {
 }
 requestAnimationFrame(reRender);
 
+const animationReferenceFrame = {
+  //width: ctx.canvas.width,
+  //height: ctx.canvas.width * 0.65,
+  height: ctx.canvas.height,
+  width: ctx.canvas.clientHeight / 0.65,
+  xOffset: ctx.canvas.width - ctx.canvas.clientHeight / 0.65,
+};
 const desktopLandscapeElementsGeometry = {
   grass: {},
   ground: {},
@@ -26,16 +33,18 @@ const desktopLandscapeElementsGeometry = {
   birds: {},
   clouds: {},
   leafs: {
-    width: ctx.canvas.clientWidth * 0.35,
-    height: ctx.canvas.clientHeight * 0.26,
-    x: ctx.canvas.clientWidth * 0.54,
-    y: ctx.canvas.clientHeight * 0.39,
+    width: animationReferenceFrame.width * 0.35,
+    height: animationReferenceFrame.height * 0.26,
+    x: animationReferenceFrame.width * 0.54 + animationReferenceFrame.xOffset,
+    //x: ctx.canvas.width * 0.54,
+    y: animationReferenceFrame.height * 0.39,
   },
   trunk: {
-    width: ctx.canvas.clientWidth * 0.19,
-    height: ctx.canvas.clientHeight * 0.44,
-    x: ctx.canvas.clientWidth * 0.63,
-    y: ctx.canvas.clientHeight * 0.54,
+    width: animationReferenceFrame.width * 0.19,
+    height: animationReferenceFrame.height * 0.44,
+    //x: ctx.canvas.width * 0.63,
+    x: animationReferenceFrame.width * 0.63 + animationReferenceFrame.xOffset,
+    y: animationReferenceFrame.height * 0.54,
   },
 };
 

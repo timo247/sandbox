@@ -581,7 +581,3 @@ export function getRealHueRange(colorHue) {
     }
   }
 }
-
-export function getProportionalValue(reference, proportion) {
-  return reference * proportion;
-}
