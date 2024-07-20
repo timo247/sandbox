@@ -13,6 +13,8 @@ function reRender(time) {
   lastTime = time;
   ctx.canvas.height = ctx.canvas.clientHeight;
   ctx.canvas.width = ctx.canvas.clientWidth;
+  mountains.draw(ctx);
+  ground.draw(ctx);
   trunk.draw(ctx);
   leafs.draw(ctx);
   requestAnimationFrame(reRender);
@@ -27,16 +29,35 @@ const animationReferenceFrame = {
   xOffset: ctx.canvas.width - ctx.canvas.clientHeight / 0.65,
 };
 const desktopLandscapeElementsGeometry = {
-  grass: {},
-  ground: {},
-  mountains: {},
+  treeBottomStrokeHider: {},
+  grass: {
+    width: animationReferenceFrame.width * 0.72,
+    height: animationReferenceFrame.height * 0.1,
+    x: animationReferenceFrame.width * 0.09 + animationReferenceFrame.xOffset,
+    y: animationReferenceFrame.height * 0.89,
+  },
+  ground: {
+    width: animationReferenceFrame.width * 1.02,
+    height: animationReferenceFrame.height * 0.23,
+    x:
+      animationReferenceFrame.width * 0.023 * -1 +
+      animationReferenceFrame.xOffset,
+    y: animationReferenceFrame.height * 0.87,
+  },
+  mountains: {
+    width: animationReferenceFrame.width * 0.67,
+    height: animationReferenceFrame.height * 0.25,
+    x:
+      animationReferenceFrame.width * 0.03 * -1 +
+      animationReferenceFrame.xOffset,
+    y: animationReferenceFrame.height * 0.77,
+  },
   birds: {},
   clouds: {},
   leafs: {
     width: animationReferenceFrame.width * 0.35,
     height: animationReferenceFrame.height * 0.26,
     x: animationReferenceFrame.width * 0.54 + animationReferenceFrame.xOffset,
-    //x: ctx.canvas.width * 0.54,
     y: animationReferenceFrame.height * 0.39,
   },
   trunk: {
@@ -62,4 +83,28 @@ const leafs = new ImageToDraw({
   y: desktopLandscapeElementsGeometry.leafs.y,
   baseWidth: desktopLandscapeElementsGeometry.leafs.width,
   baseHeight: desktopLandscapeElementsGeometry.leafs.height,
+});
+
+const mountains = new ImageToDraw({
+  imagePath: './assets/images/floor/mountain.svg',
+  x: desktopLandscapeElementsGeometry.mountains.x,
+  y: desktopLandscapeElementsGeometry.mountains.y,
+  baseWidth: desktopLandscapeElementsGeometry.mountains.width,
+  baseHeight: desktopLandscapeElementsGeometry.mountains.height,
+});
+
+const ground = new ImageToDraw({
+  imagePath: './assets/images/floor/ground.svg',
+  x: desktopLandscapeElementsGeometry.ground.x,
+  y: desktopLandscapeElementsGeometry.ground.y,
+  baseWidth: desktopLandscapeElementsGeometry.ground.width,
+  baseHeight: desktopLandscapeElementsGeometry.ground.height,
+});
+
+const treeBottomStrokeHider = new ImageToDraw({
+  imagePath: './assets/images/tree/bottom-stroke-hide.svg',
+  x: desktopLandscapeElementsGeometry.ground.x,
+  y: desktopLandscapeElementsGeometry.ground.y,
+  baseWidth: desktopLandscapeElementsGeometry.ground.width,
+  baseHeight: desktopLandscapeElementsGeometry.ground.height,
 });
